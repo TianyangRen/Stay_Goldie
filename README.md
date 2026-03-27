@@ -23,12 +23,12 @@ Boutique dog boarding website with:
 npm install
 ```
 
-2. Create `.env.local` (see [.env.example](.env.example)). You must set `AUTH_SECRET` (e.g. `openssl rand -base64 32`).
+2. Copy [.env.example](.env.example) to `.env` and fill values. Set `AUTH_SECRET` (e.g. `openssl rand -base64 32`).
 
-3. Apply migrations and seed demo data:
+3. Sync the database schema and seed demo data (Supabase: use **Session pooler** for `DIRECT_URL` if your network has no IPv6; see comments in `.env.example`):
 
 ```bash
-npx prisma migrate dev
+npm run db:push:direct
 npm run db:seed
 ```
 
@@ -42,6 +42,17 @@ npm run dev
 
 - Owner: `owner@example.com` / `Owner123!`
 - Admin: `admin@staygoldie.local` / `Admin123!`
+
+## Path B: minimum real-payments launch
+
+Use this checklist before taking **live** Stripe payments:
+
+1. **Environment**: In hosting (e.g. Vercel), set the same variables as `.env.example` — at minimum `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, `AUTH_URL`, `NEXT_PUBLIC_APP_URL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`. Use **production** Stripe keys and webhook secret.
+2. **URLs**: `AUTH_URL` and `NEXT_PUBLIC_APP_URL` must be your **public https origin** (no trailing path). Stripe Checkout success/cancel URLs use `NEXT_PUBLIC_APP_URL`.
+3. **Webhook**: In Stripe Dashboard, add endpoint `https://YOUR_DOMAIN/api/stripe/webhook`, select `checkout.session.completed`, use the signing secret as `STRIPE_WEBHOOK_SECRET`.
+4. **Contact & legal**: Set `NEXT_PUBLIC_CONTACT_EMAIL` (and optionally `NEXT_PUBLIC_CONTACT_PHONE`, `NEXT_PUBLIC_BUSINESS_NAME`). Replace placeholder copy on `/privacy` and `/terms` with lawyer-reviewed text when ready.
+5. **Email (recommended)**: Configure Resend + verified domain so order/booking emails deliver; without `RESEND_API_KEY`, payment still works but emails are skipped.
+6. **Build**: Run `npm run build` locally or in CI before deploy.
 
 ## Flows
 
@@ -57,6 +68,7 @@ npm run dev
 
 - `/` landing page
 - `/services`, `/booking`, `/shop`, `/pet-feed`, `/blog`
+- `/privacy`, `/terms` (placeholders for Path B)
 - `/account/*` (authenticated)
 - `/admin/*` (admin role only)
 
@@ -70,4 +82,4 @@ npm run dev
 ## Notes
 
 - Middleware protects `/account`, `/pet-feed`, and `/admin` using JWT (`getToken` + `AUTH_SECRET`).
-- Configure `NEXT_PUBLIC_APP_URL` / `AUTH_URL` for production callbacks on Vercel.
+- Path B still assumes **manual or seeded users**; self-serve registration is a later iteration.

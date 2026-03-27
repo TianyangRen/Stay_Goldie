@@ -11,7 +11,8 @@ export default defineConfig({
   },
   datasource: {
     url: process.env["DATABASE_URL"],
-    directUrl: process.env["DIRECT_URL"], // Supabase：无 IPv6 时用 Session pool :5432，勿用仅 IPv6 的 db.* 直连
+    // DIRECT_URL：Supabase 无 IPv6 时用 Session pool :5432（勿用仅 IPv6 的 db.* 直连）
+    ...(process.env["DIRECT_URL"] ? { directUrl: process.env["DIRECT_URL"] } : {}),
     // 可选：第二个空库 URL；Supabase 常无法自动建 shadow，`migrate dev` 会卡住时可改用 `npx prisma db push`
     ...(process.env["SHADOW_DATABASE_URL"]
       ? { shadowDatabaseUrl: process.env["SHADOW_DATABASE_URL"] }
