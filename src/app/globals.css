@@ -6,6 +6,13 @@
   --sg-muted: #5d6a63;
   --sg-accent: #d79f45;
   --sg-green: #2f4b3c;
+  /* Surfaces & borders — organic depth (stone/zinc family) */
+  --sg-surface: #fafaf9;
+  --sg-surface-alt: #f5f5f4;
+  --sg-surface-elevated: #ffffff;
+  --sg-border-subtle: rgba(28, 25, 23, 0.08);
+  --sg-border-strong: rgba(28, 25, 23, 0.12);
+  --sg-shadow-soft: 0 10px 40px -20px rgba(47, 75, 60, 0.18);
 }
 
 @theme inline {
@@ -26,4 +33,26 @@ body {
 
 .section-wrap {
   @apply mx-auto max-w-6xl px-4 md:px-6;
+}
+
+.section-surface {
+  background-color: var(--sg-surface);
+}
+
+.section-surface-alt {
+  background-color: var(--sg-surface-alt);
+}
+
+.card-elevated {
+  background-color: var(--sg-surface-elevated);
+  border: 1px solid var(--sg-border-subtle);
+  box-shadow: var(--sg-shadow-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+  }
 }

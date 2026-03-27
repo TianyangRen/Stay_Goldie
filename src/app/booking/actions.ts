@@ -20,6 +20,9 @@ export async function createBookingDraft(input: {
   if (!session?.user?.id) {
     return { ok: false, message: "请先登录。" };
   }
+  if (session.user.role !== "OWNER") {
+    return { ok: false, message: "预约仅支持主人账号，管理员请通过后台管理档期。" };
+  }
 
   if (input.petIds.length === 0) {
     return { ok: false, message: "请至少选择一只宠物。" };

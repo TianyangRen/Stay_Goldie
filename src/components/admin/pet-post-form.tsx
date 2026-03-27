@@ -1,8 +1,10 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useState, useTransition } from "react";
 import type { CreatePetPostState } from "@/app/admin/pet-posts/actions";
 import { createPetPost } from "@/app/admin/pet-posts/actions";
+import { springTap } from "@/lib/motion";
 
 type PetOption = { id: string; name: string };
 
@@ -19,6 +21,9 @@ export function PetPostForm({ pets }: Props) {
   const [extraUrls, setExtraUrls] = useState("");
   const [petId, setPetId] = useState(pets[0]?.id ?? "");
   const fileRef = useRef<HTMLInputElement>(null);
+  const reduced = useReducedMotion() ?? false;
+  const field =
+    "mt-2 w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm";
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -163,7 +168,7 @@ export function PetPostForm({ pets }: Props) {
         <textarea
           value={extraUrls}
           onChange={(e) => setExtraUrls(e.target.value)}
-          className="mt-2 w-full rounded-xl border border-black/10 p-3 text-sm"
+          className={field}
           rows={3}
           placeholder="https://..."
         />
@@ -175,18 +180,20 @@ export function PetPostForm({ pets }: Props) {
           name="caption"
           required
           rows={4}
-          className="mt-2 w-full rounded-xl border border-black/10 p-3 text-sm"
+          className={field}
           placeholder="今天的小记录…"
         />
       </label>
 
-      <button
+      <motion.button
         type="submit"
         disabled={pending || uploading}
+        whileTap={reduced ? undefined : { scale: 0.97 }}
+        transition={springTap}
         className="rounded-full bg-[var(--sg-green)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60 md:col-span-2"
       >
         {pending ? "发布中…" : "发布动态"}
-      </button>
+      </motion.button>
 
       {state?.ok === false ? (
         <p className="text-sm text-red-600 md:col-span-2">{state.message}</p>

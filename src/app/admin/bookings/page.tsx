@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma";
+import { Reveal } from "@/components/motion/reveal";
+import { StaggerSurfaceItem } from "@/components/motion/stagger-surface-item";
 import { cad } from "@/lib/cad";
 
 export const dynamic = "force-dynamic";
@@ -14,10 +16,16 @@ export default async function AdminBookingsPage() {
 
   return (
     <section className="section-wrap py-14">
-      <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：档期与预约</h1>
+      <Reveal>
+        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：档期与预约</h1>
+      </Reveal>
       <div className="mt-6 grid gap-4">
-        {bookings.map((booking) => (
-          <article key={booking.id} className="rounded-2xl border border-black/10 bg-white p-5">
+        {bookings.map((booking, index) => (
+          <StaggerSurfaceItem
+            key={booking.id}
+            index={index}
+            className="card-elevated rounded-2xl p-5"
+          >
             <p className="text-sm font-medium">
               {booking.checkInDate.toLocaleDateString("zh-CN")} -{" "}
               {booking.checkOutDate.toLocaleDateString("zh-CN")}
@@ -29,11 +37,13 @@ export default async function AdminBookingsPage() {
             <p className="mt-1 text-xs text-zinc-500">
               宠物：{booking.pets.map((bp) => bp.pet.name).join("、")}
             </p>
-          </article>
+          </StaggerSurfaceItem>
         ))}
       </div>
       {bookings.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-600">暂无预约。</p>
+        <Reveal>
+          <p className="mt-6 text-sm text-zinc-600">暂无预约。</p>
+        </Reveal>
       ) : null}
     </section>
   );

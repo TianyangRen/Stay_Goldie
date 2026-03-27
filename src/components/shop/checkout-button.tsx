@@ -1,6 +1,9 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
+import { Breath } from "@/components/motion/breath";
+import { springTap } from "@/lib/motion";
 
 type Props = {
   productId: string;
@@ -11,6 +14,7 @@ type Props = {
 export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe 结账" }: Props) {
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const reduced = useReducedMotion() ?? false;
 
   async function onCheckout() {
     setPending(true);
@@ -42,14 +46,18 @@ export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe
 
   return (
     <div className="mt-5 space-y-2">
-      <button
-        type="button"
-        onClick={onCheckout}
-        disabled={pending}
-        className="rounded-full bg-[var(--sg-green)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
-      >
-        {pending ? "跳转中…" : label}
-      </button>
+      <Breath className="inline-block">
+        <motion.button
+          type="button"
+          onClick={onCheckout}
+          disabled={pending}
+          whileTap={reduced ? undefined : { scale: 0.97 }}
+          transition={springTap}
+          className="rounded-full bg-[var(--sg-green)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
+        >
+          {pending ? "跳转中…" : label}
+        </motion.button>
+      </Breath>
       {message ? <p className="text-xs text-amber-800">{message}</p> : null}
     </div>
   );

@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState, useTransition } from "react";
 import { createBookingDraft } from "@/app/booking/actions";
+import { StaggerContainer, StaggerItem } from "@/components/motion/stagger";
 import { estimateBookingTotal } from "@/lib/pricing";
+import { springTap } from "@/lib/motion";
 
 type Pet = { id: string; name: string; sizeTier: string | null };
 
@@ -33,6 +36,7 @@ export function BookingForm({
   });
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const reduced = useReducedMotion() ?? false;
 
   const petIdsSelected = useMemo(
     () => Object.entries(selected).filter(([, v]) => v).map(([id]) => id),
@@ -120,75 +124,89 @@ export function BookingForm({
 
   if (pets.length === 0) {
     return (
-      <div className="rounded-3xl border border-black/10 bg-white p-6 text-sm text-zinc-600">
-        当前账号下还没有宠物档案，无法预约。请联系管理员添加宠物信息，或通过数据库/后台录入。
+      <div className="rounded-3xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-6 text-sm text-zinc-600">
+        <p>当前账号下还没有宠物档案，无法预约。</p>
+        <p className="mt-3">
+          <Link href="/account/pets/new" className="font-medium text-emerald-900 underline underline-offset-4">
+            添加宠物
+          </Link>
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="text-sm text-zinc-700">
-          入住日期
-          <input
-            type="date"
-            value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-black/10 p-3"
-          />
-        </label>
-        <label className="text-sm text-zinc-700">
-          离店日期
-          <input
-            type="date"
-            value={checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-black/10 p-3"
-          />
-        </label>
-      </div>
+    <StaggerContainer className="space-y-6">
+      <StaggerItem>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="text-sm text-zinc-700">
+            入住日期
+            <input
+              type="date"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3"
+            />
+          </label>
+          <label className="text-sm text-zinc-700">
+            离店日期
+            <input
+              type="date"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3"
+            />
+          </label>
+        </div>
+      </StaggerItem>
 
-      <div>
-        <p className="text-sm font-medium text-zinc-800">选择宠物（多宠合并计价）</p>
-        <ul className="mt-2 space-y-2">
-          {pets.map((pet) => (
-            <li key={pet.id}>
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700">
-                <input
-                  type="checkbox"
-                  checked={!!selected[pet.id]}
-                  onChange={() => toggle(pet.id)}
-                />
-                {pet.name}
-                <span className="text-zinc-500">({pet.sizeTier ?? "medium"})</span>
-              </label>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <StaggerItem>
+        <div>
+          <p className="text-sm font-medium text-zinc-800">选择宠物（多宠合并计价）</p>
+          <ul className="mt-2 space-y-2">
+            {pets.map((pet) => (
+              <li key={pet.id}>
+                <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700">
+                  <input
+                    type="checkbox"
+                    checked={!!selected[pet.id]}
+                    onChange={() => toggle(pet.id)}
+                  />
+                  {pet.name}
+                  <span className="text-zinc-500">({pet.sizeTier ?? "medium"})</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </StaggerItem>
 
-      <div className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-900">
-        {preview ? (
-          <>
-            预估 {preview.nights} 晚 · 总价约 CAD {preview.estimatedTotal} · 订金 CAD {preview.deposit}{" "}
-            （基础每晚 CAD {baseNightlyCad}，可在环境变量 BOARDING_BASE_NIGHTLY_CAD 调整）
-          </>
-        ) : (
-          <>请至少选择一只宠物以显示预估金额。</>
-        )}
-      </div>
+      <StaggerItem>
+        <div className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-900">
+          {preview ? (
+            <>
+              预估 {preview.nights} 晚 · 总价约 CAD {preview.estimatedTotal} · 订金 CAD {preview.deposit}{" "}
+              （基础每晚 CAD {baseNightlyCad}，可在环境变量 BOARDING_BASE_NIGHTLY_CAD 调整）
+            </>
+          ) : (
+            <>请至少选择一只宠物以显示预估金额。</>
+          )}
+        </div>
+      </StaggerItem>
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
-
-      <button
-        type="button"
-        onClick={onPayDeposit}
-        disabled={pending}
-        className="rounded-full bg-[var(--sg-green)] px-6 py-3 text-sm font-medium text-white disabled:opacity-60"
-      >
-        {pending ? "处理中…" : "创建预约并支付订金（Stripe）"}
-      </button>
-    </div>
+      <StaggerItem>
+        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        <motion.button
+          type="button"
+          onClick={onPayDeposit}
+          disabled={pending}
+          whileTap={reduced ? undefined : { scale: 0.97 }}
+          transition={springTap}
+          className="mt-2 rounded-full bg-[var(--sg-green)] px-6 py-3 text-sm font-medium text-white disabled:opacity-60"
+        >
+          {pending ? "处理中…" : "创建预约并支付订金（Stripe）"}
+        </motion.button>
+      </StaggerItem>
+    </StaggerContainer>
   );
 }

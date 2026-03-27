@@ -25,6 +25,9 @@ export async function POST(request: Request) {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  if (session.user.role !== "OWNER") {
+    return NextResponse.json({ error: "Checkout is for owner accounts only" }, { status: 403 });
+  }
 
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
   if (!stripeSecret) {

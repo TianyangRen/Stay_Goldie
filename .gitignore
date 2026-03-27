@@ -42,3 +42,6 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# Local Stripe CLI (downloaded binary; see scripts/stripe-listen.cmd)
+/tools/stripe-cli/

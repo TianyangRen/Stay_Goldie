@@ -1,15 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { PropsWithChildren } from "react";
+import { reducedTransition, springSnappy } from "@/lib/motion";
 
-export function Reveal({ children }: PropsWithChildren) {
+type Props = PropsWithChildren<{
+  className?: string;
+  /** seconds */
+  delay?: number;
+  y?: number;
+  amount?: number | "some";
+}>;
+
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  y = 20,
+  amount = 0.15,
+}: Props) {
+  const reduced = useReducedMotion() ?? false;
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      className={className}
+      initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      viewport={{ once: true, amount }}
+      transition={
+        reduced
+          ? reducedTransition
+          : {
+              ...springSnappy,
+              delay,
+            }
+      }
     >
       {children}
     </motion.div>

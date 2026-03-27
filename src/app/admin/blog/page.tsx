@@ -1,4 +1,7 @@
 import { prisma } from "@/lib/prisma";
+import { Reveal } from "@/components/motion/reveal";
+import { StaggerContainer, StaggerItem } from "@/components/motion/stagger";
+import { StaggerSurfaceItem } from "@/components/motion/stagger-surface-item";
 
 export const dynamic = "force-dynamic";
 
@@ -10,32 +13,53 @@ export default async function AdminBlogPage() {
 
   return (
     <section className="section-wrap py-14">
-      <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：博客发布</h1>
-      <div className="mt-6 rounded-3xl border border-black/10 bg-white p-6">
-        <form className="grid gap-4">
-          <input className="rounded-xl border border-black/10 p-3 text-sm" placeholder="文章标题" disabled />
-          <input className="rounded-xl border border-black/10 p-3 text-sm" placeholder="slug" disabled />
-          <textarea
-            className="rounded-xl border border-black/10 p-3 text-sm"
-            rows={7}
-            placeholder="正文"
-            disabled
-          />
-          <p className="text-xs text-zinc-500">
-            生产发布建议使用 MDX/CMS 或 Server Action 写入 BlogPost。
-          </p>
-        </form>
-      </div>
-      <ul className="mt-6 space-y-2">
-        {posts.map((post) => (
-          <li
+      <Reveal>
+        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：博客发布</h1>
+      </Reveal>
+      <Reveal delay={0.05}>
+        <div className="mt-6 card-elevated rounded-3xl p-6">
+          <StaggerContainer className="grid gap-4">
+            <StaggerItem>
+              <input
+                className="w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm"
+                placeholder="文章标题"
+                disabled
+              />
+            </StaggerItem>
+            <StaggerItem>
+              <input
+                className="w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm"
+                placeholder="slug"
+                disabled
+              />
+            </StaggerItem>
+            <StaggerItem>
+              <textarea
+                className="w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm"
+                rows={7}
+                placeholder="正文"
+                disabled
+              />
+            </StaggerItem>
+            <StaggerItem>
+              <p className="text-xs text-zinc-500">
+                生产发布建议使用 MDX/CMS 或 Server Action 写入 BlogPost。
+              </p>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </Reveal>
+      <div className="mt-6 space-y-2">
+        {posts.map((post, index) => (
+          <StaggerSurfaceItem
             key={post.id}
-            className="rounded-xl border border-black/10 bg-white px-4 py-3 text-sm"
+            index={index}
+            className="rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] px-4 py-3 text-sm"
           >
             {post.title}
-          </li>
+          </StaggerSurfaceItem>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

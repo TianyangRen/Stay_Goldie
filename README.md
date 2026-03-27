@@ -63,6 +63,7 @@ Use this checklist before taking **live** Stripe payments:
 
 - Use **Checkout** via `POST /api/stripe/checkout` (`shop_order` or `booking_deposit`).
 - Point Stripe CLI or dashboard webhooks to `POST /api/stripe/webhook` with your `STRIPE_WEBHOOK_SECRET`.
+- **Local webhook (Windows)**: If Scoop’s `stripe` shim fails, this repo includes `tools/stripe-cli/stripe.exe` (gitignored; run the download command from onboarding or ask a teammate). Then: `tools\stripe-cli\stripe.exe login` once, and `scripts\stripe-listen.cmd` to forward events (keep that window open).
 
 ## Main Routes
 
