@@ -12,7 +12,7 @@ export function HomeHero() {
       <div className="md:col-span-3">
         <StaggerContainer className="space-y-5">
           <StaggerItem>
-            <p className="inline-block rounded-full border border-amber-600/25 bg-white/90 px-4 py-2 text-xs text-amber-800 shadow-sm">
+            <p className="inline-block rounded-full border border-[var(--sg-primary)]/25 bg-white/90 px-4 py-2 text-xs text-[var(--sg-text)] shadow-sm">
               Boutique Family Dog Boarding in Canada
             </p>
           </StaggerItem>
@@ -31,7 +31,7 @@ export function HomeHero() {
               <Pressable className="inline-block">
                 <Link
                   href="/booking"
-                  className="inline-flex rounded-full bg-[var(--sg-green)] px-6 py-3 text-sm font-medium text-white shadow-md transition-shadow hover:shadow-lg"
+                  className="inline-flex rounded-full bg-[var(--sg-cta)] px-6 py-3 text-sm font-medium text-white shadow-md transition-shadow hover:shadow-lg"
                 >
                   立即预约
                 </Link>

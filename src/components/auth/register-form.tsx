@@ -96,7 +96,7 @@ export function RegisterForm() {
             disabled={pending}
             whileTap={reduced ? undefined : { scale: 0.97 }}
             transition={springTap}
-            className="mt-1 w-full rounded-2xl bg-zinc-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
+            className="mt-1 w-full rounded-2xl bg-[var(--sg-cta)] px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
           >
             {pending ? "创建账号中…" : "注册"}
           </motion.button>
@@ -104,7 +104,7 @@ export function RegisterForm() {
         <StaggerItem>
           <p className="text-center text-sm text-zinc-600">
             已有账号？{" "}
-            <Link href="/login" className="font-medium text-emerald-900 underline underline-offset-4">
+            <Link href="/login" className="font-medium text-[var(--sg-green)] underline underline-offset-4">
               登录
             </Link>
           </p>

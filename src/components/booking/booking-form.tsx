@@ -127,7 +127,7 @@ export function BookingForm({
       <div className="rounded-3xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-6 text-sm text-zinc-600">
         <p>当前账号下还没有宠物档案，无法预约。</p>
         <p className="mt-3">
-          <Link href="/account/pets/new" className="font-medium text-emerald-900 underline underline-offset-4">
+          <Link href="/account/pets/new" className="font-medium text-[var(--sg-green)] underline underline-offset-4">
             添加宠物
           </Link>
         </p>
@@ -202,7 +202,7 @@ export function BookingForm({
           disabled={pending}
           whileTap={reduced ? undefined : { scale: 0.97 }}
           transition={springTap}
-          className="mt-2 rounded-full bg-[var(--sg-green)] px-6 py-3 text-sm font-medium text-white disabled:opacity-60"
+          className="mt-2 rounded-full bg-[var(--sg-cta)] px-6 py-3 text-sm font-medium text-white disabled:opacity-60"
         >
           {pending ? "处理中…" : "创建预约并支付订金（Stripe）"}
         </motion.button>

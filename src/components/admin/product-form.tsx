@@ -228,7 +228,7 @@ export function ProductForm(props: Props) {
               disabled={pending || delPending}
               whileTap={reduced ? undefined : { scale: 0.97 }}
               transition={springTap}
-              className="rounded-full bg-[var(--sg-green)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+              className="rounded-full bg-[var(--sg-cta)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
             >
               {pending ? "保存中…" : props.mode === "create" ? "创建商品" : "保存"}
             </motion.button>

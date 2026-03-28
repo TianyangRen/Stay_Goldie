@@ -16,7 +16,7 @@ export function FeatureCard({
       transition={rd ? { duration: 0.01 } : springSnappy}
       className="card-elevated rounded-3xl p-6"
     >
-      <h3 className="text-lg font-semibold text-zinc-900">{title}</h3>
+      <h3 className="text-lg font-semibold text-[var(--sg-text)]">{title}</h3>
       <p className="mt-2 text-sm leading-7 text-zinc-600">{children}</p>
     </motion.article>
   );

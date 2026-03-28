@@ -190,7 +190,7 @@ export function PetPostForm({ pets }: Props) {
         disabled={pending || uploading}
         whileTap={reduced ? undefined : { scale: 0.97 }}
         transition={springTap}
-        className="rounded-full bg-[var(--sg-green)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60 md:col-span-2"
+        className="rounded-full bg-[var(--sg-cta)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60 md:col-span-2"
       >
         {pending ? "发布中…" : "发布动态"}
       </motion.button>
@@ -199,7 +199,7 @@ export function PetPostForm({ pets }: Props) {
         <p className="text-sm text-red-600 md:col-span-2">{state.message}</p>
       ) : null}
       {state?.ok ? (
-        <p className="text-sm text-emerald-800 md:col-span-2">发布成功。</p>
+        <p className="text-sm text-green-800 md:col-span-2">发布成功。</p>
       ) : null}
     </form>
   );

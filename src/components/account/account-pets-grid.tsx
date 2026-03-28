@@ -46,7 +46,7 @@ export function AccountPetsGrid({ pets }: { pets: AccountPetCard[] }) {
           <p className="text-sm text-zinc-600">{pet.breedLine}</p>
           <Link
             href={`/account/pets/${pet.id}/edit`}
-            className="mt-4 inline-block text-sm font-medium text-emerald-900 underline underline-offset-4"
+            className="mt-4 inline-block text-sm font-medium text-[var(--sg-green)] underline underline-offset-4"
           >
             编辑档案
           </Link>

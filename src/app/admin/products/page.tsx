@@ -25,7 +25,7 @@ export default async function AdminProductsPage() {
           <Pressable className="inline-block shrink-0">
             <Link
               href="/admin/products/new"
-              className="inline-flex justify-center rounded-full bg-[var(--sg-green)] px-5 py-2.5 text-sm font-medium text-white"
+              className="inline-flex justify-center rounded-full bg-[var(--sg-cta)] px-5 py-2.5 text-sm font-medium text-white"
             >
               新建商品
             </Link>
@@ -61,7 +61,7 @@ export default async function AdminProductsPage() {
                   <td className="px-4 py-3">{product.inventory?.stock ?? 0}</td>
                   <td className="px-4 py-3">
                     {product.isActive ? (
-                      <span className="text-emerald-800">上架</span>
+                      <span className="text-green-700">上架</span>
                     ) : (
                       <span className="text-zinc-500">下架</span>
                     )}
@@ -70,7 +70,7 @@ export default async function AdminProductsPage() {
                     <Pressable className="inline-block">
                       <Link
                         href={`/admin/products/${product.id}/edit`}
-                        className="font-medium text-emerald-900 underline underline-offset-4"
+                        className="font-medium text-[var(--sg-green)] underline underline-offset-4"
                       >
                         编辑
                       </Link>

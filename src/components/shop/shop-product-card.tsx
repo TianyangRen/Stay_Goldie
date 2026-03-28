@@ -55,7 +55,7 @@ export function ShopProductCard({
         </p>
         <Link
           href={`/shop/${slug}`}
-          className="mt-4 inline-block rounded-full bg-zinc-900 px-4 py-2 text-xs text-white"
+          className="mt-4 inline-block rounded-full bg-[var(--sg-cta)] px-4 py-2 text-xs text-white"
         >
           查看商品
         </Link>

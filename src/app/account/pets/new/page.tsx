@@ -9,7 +9,7 @@ export default function NewPetPage() {
         <div className="mx-auto max-w-lg">
           <Reveal>
             <p className="text-sm text-zinc-600">
-              <Link href="/account/pets" className="text-emerald-900 underline underline-offset-4">
+              <Link href="/account/pets" className="text-[var(--sg-green)] underline underline-offset-4">
                 ← 我的宠物
               </Link>
             </p>

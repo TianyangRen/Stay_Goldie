@@ -35,7 +35,7 @@ export default async function AdminEditProductPage({ params }: Props) {
     <section className="section-wrap py-14">
       <Reveal>
         <p className="text-sm text-zinc-600">
-          <Link href="/admin/products" className="text-emerald-900 underline underline-offset-4">
+          <Link href="/admin/products" className="text-[var(--sg-green)] underline underline-offset-4">
             ← 商品列表
           </Link>
         </p>

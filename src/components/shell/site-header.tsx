@@ -34,7 +34,7 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-        <Link href="/" className="text-sm font-semibold tracking-wide text-emerald-900">
+        <Link href="/" className="text-sm font-semibold tracking-wide text-[var(--sg-green)]">
           Stay Goldie
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
@@ -44,7 +44,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm transition ${active ? "text-emerald-900" : "text-zinc-600 hover:text-zinc-900"}`}
+                className={`text-sm transition ${active ? "text-[var(--sg-green)]" : "text-zinc-600 hover:text-[var(--sg-text)]"}`}
               >
                 {link.label}
               </Link>
@@ -67,7 +67,7 @@ export function SiteHeader() {
                 <button
                   type="button"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="rounded-full bg-emerald-900 px-4 py-2 text-xs font-medium text-white"
+                  className="rounded-full border border-[var(--sg-border-strong)] bg-[var(--sg-surface-elevated)] px-4 py-2 text-xs font-medium text-[var(--sg-text)]"
                 >
                   退出
                 </button>
@@ -78,7 +78,7 @@ export function SiteHeader() {
               <Pressable className="inline-block">
                 <Link
                   href="/register"
-                  className="rounded-full border border-emerald-900/30 px-4 py-2 text-xs font-medium text-emerald-900"
+                  className="rounded-full border border-[var(--sg-green)]/35 px-4 py-2 text-xs font-medium text-[var(--sg-green)]"
                 >
                   注册
                 </Link>
@@ -86,7 +86,7 @@ export function SiteHeader() {
               <Pressable className="inline-block">
                 <Link
                   href="/login"
-                  className="rounded-full bg-emerald-900 px-4 py-2 text-xs font-medium text-white"
+                  className="rounded-full bg-[var(--sg-cta)] px-4 py-2 text-xs font-medium text-white"
                 >
                   {status === "loading" ? "…" : "登录"}
                 </Link>

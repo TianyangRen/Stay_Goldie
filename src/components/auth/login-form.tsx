@@ -76,7 +76,7 @@ export function LoginForm() {
             disabled={pending}
             whileTap={reduced ? undefined : { scale: 0.97 }}
             transition={springTap}
-            className="mt-1 w-full rounded-2xl bg-zinc-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
+            className="mt-1 w-full rounded-2xl bg-[var(--sg-cta)] px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
           >
             {pending ? "登录中…" : "登录"}
           </motion.button>
@@ -84,7 +84,7 @@ export function LoginForm() {
         <StaggerItem>
           <p className="text-center text-sm text-zinc-600">
             还没有账号？{" "}
-            <Link href="/register" className="font-medium text-emerald-900 underline underline-offset-4">
+            <Link href="/register" className="font-medium text-[var(--sg-green)] underline underline-offset-4">
               注册
             </Link>
           </p>

@@ -40,7 +40,7 @@ export default async function AccountPetsPage() {
             <Pressable className="inline-block shrink-0">
               <Link
                 href="/account/pets/new"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--sg-green)] px-5 py-2.5 text-sm font-medium text-white"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--sg-cta)] px-5 py-2.5 text-sm font-medium text-white"
               >
                 添加宠物
               </Link>
@@ -55,7 +55,7 @@ export default async function AccountPetsPage() {
               <Pressable className="mt-4 inline-block">
                 <Link
                   href="/account/pets/new"
-                  className="inline-block rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white"
+                  className="inline-block rounded-full bg-[var(--sg-cta)] px-5 py-2.5 text-sm font-medium text-white"
                 >
                   添加第一只宠物
                 </Link>

@@ -53,7 +53,7 @@ export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe
           disabled={pending}
           whileTap={reduced ? undefined : { scale: 0.97 }}
           transition={springTap}
-          className="rounded-full bg-[var(--sg-green)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
+          className="rounded-full bg-[var(--sg-cta)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
         >
           {pending ? "跳转中…" : label}
         </motion.button>
