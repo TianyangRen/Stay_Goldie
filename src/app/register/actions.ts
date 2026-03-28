@@ -1,5 +1,7 @@
 "use server";
 
+/** Owner self-registration: Zod + bcrypt + Prisma user row. */
+
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";

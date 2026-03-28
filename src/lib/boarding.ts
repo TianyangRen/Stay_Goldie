@@ -1,3 +1,4 @@
+/** Default nightly boarding rate in CAD (env BOARDING_BASE_NIGHTLY_CAD overrides). */
 export function getBoardingBaseNightlyCad(): number {
   const raw = process.env.BOARDING_BASE_NIGHTLY_CAD;
   if (raw === undefined || raw === "") {

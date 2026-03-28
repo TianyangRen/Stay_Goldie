@@ -1,9 +1,12 @@
+/** Pure pricing helpers for boarding estimates (no I/O). */
+
 const SIZE_MULTIPLIER: Record<string, number> = {
   small: 1,
   medium: 1.15,
   large: 1.35,
 };
 
+/** Calendar-night count between ISO date strings (booking UI). */
 export function getNightCount(checkIn: string, checkOut: string): number {
   const inDate = new Date(checkIn);
   const outDate = new Date(checkOut);
@@ -11,6 +14,7 @@ export function getNightCount(checkIn: string, checkOut: string): number {
   return Math.max(1, Math.ceil(ms / (1000 * 60 * 60 * 24)));
 }
 
+/** Subtotal + suggested deposit from base rate, tiers, and stay length. */
 export function estimateBookingTotal(params: {
   baseNightlyCad: number;
   petSizeTiers: string[];

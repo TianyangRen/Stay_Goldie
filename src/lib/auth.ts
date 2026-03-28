@@ -1,3 +1,4 @@
+/** Thin helpers around NextAuth `auth()` for routes/actions. */
 import { auth } from "@/auth";
 
 export async function requireSession() {

@@ -1,3 +1,7 @@
+/**
+ * Singleton Prisma client with pg adapter (server-side only).
+ * Database access for actions, routes, and lib services should import from here.
+ */
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";

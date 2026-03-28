@@ -1,3 +1,4 @@
+/** Shared Framer Motion transitions / stagger variants (client components only). */
 import type { Transition, Variants } from "framer-motion";
 
 /** Primary spring — smooth, slight inertia */

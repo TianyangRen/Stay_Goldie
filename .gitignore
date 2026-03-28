@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Local Stripe CLI (downloaded binary; see scripts/stripe-listen.cmd)
 /tools/stripe-cli/
+
+.cursorrules
+.cursor
