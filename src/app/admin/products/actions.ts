@@ -32,7 +32,7 @@ function revalidateProductPaths(slugs: string[]) {
 
 export async function createProduct(input: AdminProductFormInput): Promise<AdminProductState> {
   if (!(await requireAdminSession())) {
-    return { ok: false, message: "需要管理员权限。" };
+    return { ok: false, message: "Administrator access required." };
   }
 
   const parsed = parseAdminProductInput(input);
@@ -46,10 +46,10 @@ export async function createProduct(input: AdminProductFormInput): Promise<Admin
     return { ok: true };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
-      return { ok: false, message: "该 slug 已被占用，请换一个。" };
+      return { ok: false, message: "That slug is already taken—try another." };
     }
     console.error(e);
-    return { ok: false, message: "创建失败。" };
+    return { ok: false, message: "Create failed." };
   }
 }
 
@@ -58,12 +58,12 @@ export async function updateProduct(
   input: AdminProductFormInput,
 ): Promise<AdminProductState> {
   if (!(await requireAdminSession())) {
-    return { ok: false, message: "需要管理员权限。" };
+    return { ok: false, message: "Administrator access required." };
   }
 
   const existing = await prisma.product.findUnique({ where: { id: productId } });
   if (!existing) {
-    return { ok: false, message: "商品不存在。" };
+    return { ok: false, message: "Product not found." };
   }
 
   const parsed = parseAdminProductInput(input);
@@ -78,16 +78,16 @@ export async function updateProduct(
     return { ok: true };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
-      return { ok: false, message: "该 slug 已被占用。" };
+      return { ok: false, message: "That slug is already taken." };
     }
     console.error(e);
-    return { ok: false, message: "保存失败。" };
+    return { ok: false, message: "Save failed." };
   }
 }
 
 export async function deleteProduct(productId: string): Promise<AdminProductState> {
   if (!(await requireAdminSession())) {
-    return { ok: false, message: "需要管理员权限。" };
+    return { ok: false, message: "Administrator access required." };
   }
 
   const existing = await prisma.product.findUnique({
@@ -95,10 +95,10 @@ export async function deleteProduct(productId: string): Promise<AdminProductStat
     include: { _count: { select: { orderItems: true } } },
   });
   if (!existing) {
-    return { ok: false, message: "商品不存在。" };
+    return { ok: false, message: "Product not found." };
   }
   if (existing._count.orderItems > 0) {
-    return { ok: false, message: "该商品已有订单记录，不能删除，请改为下架。" };
+    return { ok: false, message: "This product has orders and cannot be deleted—mark it inactive instead." };
   }
 
   try {
@@ -110,6 +110,6 @@ export async function deleteProduct(productId: string): Promise<AdminProductStat
     return { ok: true };
   } catch (e) {
     console.error(e);
-    return { ok: false, message: "删除失败，可能仍有关联数据。" };
+    return { ok: false, message: "Delete failed—related data may still exist." };
   }
 }

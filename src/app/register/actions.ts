@@ -9,7 +9,7 @@ import { prisma } from "@/lib/prisma";
 
 const schema = z.object({
   email: z.string().email(),
-  password: z.string().min(8, "密码至少 8 位"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
   name: z.string().max(80).optional(),
 });
 
@@ -24,7 +24,7 @@ export async function registerUser(input: {
 }): Promise<RegisterState> {
   const parsed = schema.safeParse(input);
   if (!parsed.success) {
-    const msg = parsed.error.flatten().fieldErrors.password?.[0] ?? "请检查输入。";
+    const msg = parsed.error.flatten().fieldErrors.password?.[0] ?? "Check your input.";
     return { ok: false, message: msg };
   }
 
@@ -43,9 +43,9 @@ export async function registerUser(input: {
     return { ok: true };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
-      return { ok: false, message: "该邮箱已注册，请直接登录。" };
+      return { ok: false, message: "That email is already registered. Sign in instead." };
     }
     console.error(e);
-    return { ok: false, message: "注册失败，请稍后重试。" };
+    return { ok: false, message: "Registration failed. Try again in a moment." };
   }
 }

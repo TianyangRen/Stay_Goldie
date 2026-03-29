@@ -42,7 +42,7 @@ export function LegalDoc({ badge, title, intro, bullets, homeHref = "/" }: Props
               <StaggerItem>
                 <p className="text-sm">
                   <Link href={homeHref} className="text-[var(--sg-green)] underline underline-offset-4">
-                    返回首页
+                    Back to home
                   </Link>
                 </p>
               </StaggerItem>

@@ -76,9 +76,9 @@ async function main() {
   await prisma.petHealthProfile.create({
     data: {
       petId: petMochi.id,
-      dietRestrictions: "避免鸡肉与高乳糖零食",
-      medications: "无",
-      socialBehavior: "友善，第一次见面需 10 分钟适应",
+      dietRestrictions: "Avoid chicken and high-lactose treats.",
+      medications: "None",
+      socialBehavior: "Friendly—needs ~10 minutes to warm up on first meetings.",
       emergencyContactName: "Emma",
       emergencyContactPhone: "+1 778-888-1234",
       vetName: "North Shore Vet",
@@ -121,9 +121,9 @@ async function main() {
 
   const productFood = await prisma.product.create({
     data: {
-      name: "低敏狗粮 2kg",
+      name: "Low-allergy kibble 2 kg",
       slug: "low-allergy-food-2kg",
-      description: "针对敏感肠胃的低敏主粮。",
+      description: "Gentle recipe for pups with sensitive stomachs.",
       imageUrl:
         "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=900&auto=format&fit=crop",
       basePriceCad: new Prisma.Decimal(42),
@@ -133,9 +133,9 @@ async function main() {
 
   await prisma.product.create({
     data: {
-      name: "安抚慢食碗",
+      name: "Calming slow-feed bowl",
       slug: "slow-feed-bowl",
-      description: "减速进食，帮助稳定情绪和消化。",
+      description: "Slows mealtime to support calmer eating and digestion.",
       imageUrl:
         "https://images.unsplash.com/photo-1601758064224-df6b7f0f0ec8?q=80&w=900&auto=format&fit=crop",
       basePriceCad: new Prisma.Decimal(28),
@@ -164,7 +164,7 @@ async function main() {
   const post1 = await prisma.petPost.create({
     data: {
       petId: petMochi.id,
-      caption: "今天在后院和新朋友玩了追球，超开心。",
+      caption: "Chased the ball with a new buddy in the yard—best day!",
       media: {
         create: [
           {
@@ -180,7 +180,7 @@ async function main() {
   await prisma.petPost.create({
     data: {
       petId: petBao.id,
-      caption: "午睡时间，抱着最爱的毯子。",
+      caption: "Nap time with my favourite blanket.",
       media: {
         create: [
           {
@@ -194,11 +194,11 @@ async function main() {
   });
 
   const categoryPrep = await prisma.blogCategory.create({
-    data: { name: "寄养准备", slug: "boarding-prep" },
+    data: { name: "Boarding prep", slug: "boarding-prep" },
   });
 
   const categoryBehavior = await prisma.blogCategory.create({
-    data: { name: "行为训练", slug: "behavior" },
+    data: { name: "Training & behaviour", slug: "behavior" },
   });
 
   await prisma.blogPost.createMany({
@@ -206,11 +206,11 @@ async function main() {
       {
         authorId: admin.id,
         categoryId: categoryPrep.id,
-        title: "狗狗寄养前 7 项准备清单",
+        title: "7-step boarding prep checklist for dogs",
         slug: "boarding-prep-checklist",
-        excerpt: "从作息到饮食，帮助狗狗更平稳过渡到寄养环境。",
+        excerpt: "Routine, meals, and mindset tweaks for a smoother stay away from home.",
         content:
-          "这里是正文占位。建议后续使用 MDX 或 CMS 管理正文，并补充结构化数据与相关文章推荐。",
+          "Placeholder body copy. Swap in MDX or a CMS later, then add structured data and related posts.",
         coverImage:
           "https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1000&auto=format&fit=crop",
         publishedAt: new Date("2026-03-10"),
@@ -218,11 +218,11 @@ async function main() {
       {
         authorId: admin.id,
         categoryId: categoryBehavior.id,
-        title: "分离焦虑缓解指南：主人和狗狗都更安心",
+        title: "Easing separation anxiety—for pups and humans",
         slug: "separation-anxiety-tips",
-        excerpt: "可执行的日常训练策略，降低寄养初期紧张感。",
+        excerpt: "Simple daily drills that lower stress before the first boarding night.",
         content:
-          "这里是正文占位。建议加入循序渐进的训练步骤与案例，便于长尾 SEO。",
+          "Placeholder body copy. Add progressive training steps and short case notes for long-tail SEO.",
         coverImage:
           "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?q=80&w=1000&auto=format&fit=crop",
         publishedAt: new Date("2026-03-12"),

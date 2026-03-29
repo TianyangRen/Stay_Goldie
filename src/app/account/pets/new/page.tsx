@@ -10,15 +10,15 @@ export default function NewPetPage() {
           <Reveal>
             <p className="text-sm text-zinc-600">
               <Link href="/account/pets" className="text-[var(--sg-green)] underline underline-offset-4">
-                ← 我的宠物
+                ← My pets
               </Link>
             </p>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">添加宠物</h1>
+            <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">Add a pet</h1>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="mt-2 text-sm text-zinc-600">填写基本信息，预约寄养时会用体型参与估价。</p>
+            <p className="mt-2 text-sm text-zinc-600">Basics help us quote boarding using each dog&apos;s size tier.</p>
           </Reveal>
           <div className="mt-8">
             <PetForm mode="create" />

@@ -38,7 +38,7 @@ export function AccountPetsGrid({ pets }: { pets: AccountPetCard[] }) {
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-[var(--sg-surface-alt)] text-xs text-zinc-500">
-                无头像
+                No photo
               </div>
             )}
           </div>
@@ -48,7 +48,7 @@ export function AccountPetsGrid({ pets }: { pets: AccountPetCard[] }) {
             href={`/account/pets/${pet.id}/edit`}
             className="mt-4 inline-block text-sm font-medium text-[var(--sg-green)] underline underline-offset-4"
           >
-            编辑档案
+            Edit profile
           </Link>
         </motion.article>
       ))}

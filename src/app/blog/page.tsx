@@ -18,18 +18,18 @@ export default async function BlogPage() {
     excerpt: post.excerpt,
     coverImage: post.coverImage,
     categoryName: post.category?.name ?? null,
-    publishedLabel: post.publishedAt?.toLocaleDateString("zh-CN") ?? null,
+    publishedLabel: post.publishedAt?.toLocaleDateString("en-CA") ?? null,
   }));
 
   return (
     <section className="section-surface py-14">
       <div className="section-wrap">
         <Reveal>
-          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">博客 / 指南</h1>
+          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Blog & guides</h1>
         </Reveal>
         <BlogPostList posts={items} />
         {posts.length === 0 ? (
-          <p className="mt-8 text-sm text-zinc-600">暂无文章。</p>
+          <p className="mt-8 text-sm text-zinc-600">No posts yet.</p>
         ) : null}
       </div>
     </section>

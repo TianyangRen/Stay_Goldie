@@ -37,7 +37,7 @@ export function PetFeedGrid({ posts }: { posts: PetFeedCardData[] }) {
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-[var(--sg-surface-alt)] text-sm text-zinc-500">
-                无图
+                No media
               </div>
             )}
           </div>

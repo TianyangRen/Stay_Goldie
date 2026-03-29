@@ -7,12 +7,12 @@ import { signOut, useSession } from "next-auth/react";
 import { Pressable } from "@/components/motion/pressable";
 
 const links = [
-  { href: "/", label: "首页" },
-  { href: "/services", label: "服务" },
-  { href: "/booking", label: "预约" },
-  { href: "/shop", label: "商城" },
-  { href: "/pet-feed", label: "宠物Ins" },
-  { href: "/blog", label: "博客" },
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/booking", label: "Book" },
+  { href: "/shop", label: "Shop" },
+  { href: "/pet-feed", label: "Pet feed" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function SiteHeader() {
@@ -29,47 +29,70 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-[var(--sg-border-subtle)] bg-[var(--sg-surface)]/85 backdrop-blur transition-shadow duration-300 ${
+      className={`sticky top-0 z-50 border-b border-[var(--sg-border-subtle)] bg-[var(--sg-surface)]/90 backdrop-blur transition-shadow duration-300 ${
         scrolled ? "shadow-[var(--sg-shadow-soft)]" : ""
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-        <Link href="/" className="text-sm font-semibold tracking-wide text-[var(--sg-green)]">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 md:gap-4 md:px-6">
+        <Link
+          href="/"
+          className="focus-ring-clay shrink-0 rounded-md text-sm font-semibold tracking-wide text-[var(--sg-green)]"
+        >
           Stay Goldie
         </Link>
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm transition ${active ? "text-[var(--sg-green)]" : "text-zinc-600 hover:text-[var(--sg-text)]"}`}
+                className={`focus-ring-clay rounded-md text-sm transition-clay ${
+                  active ? "font-medium text-[var(--sg-green)]" : "text-zinc-600 hover:text-[var(--sg-text)]"
+                }`}
               >
                 {link.label}
               </Link>
             );
           })}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+          <Pressable className="inline-block md:hidden">
+            <Link
+              href="/booking"
+              className="focus-ring-clay inline-flex cursor-pointer rounded-full bg-[var(--sg-cta)] px-3 py-1.5 text-xs font-semibold text-white transition-clay hover:brightness-105"
+            >
+              Book
+            </Link>
+          </Pressable>
+          <Pressable className="hidden md:inline-block">
+            <Link
+              href="/booking"
+              className="focus-ring-clay inline-flex cursor-pointer rounded-full bg-[var(--sg-cta)] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-clay hover:brightness-105 hover:shadow-md"
+            >
+              Book now
+            </Link>
+          </Pressable>
           {session?.user ? (
             <>
-              <span className="hidden text-xs text-zinc-500 sm:inline">{session.user.email}</span>
+              <span className="hidden max-w-[140px] truncate text-xs text-zinc-500 lg:inline">
+                {session.user.email}
+              </span>
               <Pressable className="inline-block">
                 <Link
                   href={session.user.role === "ADMIN" ? "/admin" : "/account/pets"}
-                  className="rounded-full border border-[var(--sg-border-subtle)] px-3 py-2 text-xs font-medium text-zinc-800"
+                  className="focus-ring-clay rounded-full border-[2px] border-[var(--sg-border-subtle)] bg-[var(--sg-surface-elevated)] px-3 py-2 text-xs font-medium text-zinc-800 transition-clay hover:border-[var(--sg-primary)]/25"
                 >
-                  {session.user.role === "ADMIN" ? "后台" : "账户"}
+                  {session.user.role === "ADMIN" ? "Admin" : "Account"}
                 </Link>
               </Pressable>
               <Pressable className="inline-block">
                 <button
                   type="button"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="rounded-full border border-[var(--sg-border-strong)] bg-[var(--sg-surface-elevated)] px-4 py-2 text-xs font-medium text-[var(--sg-text)]"
+                  className="focus-ring-clay rounded-full border border-[var(--sg-border-strong)] bg-[var(--sg-surface-elevated)] px-3 py-2 text-xs font-medium text-[var(--sg-text)] transition-clay hover:bg-[var(--sg-surface)] sm:px-4"
                 >
-                  退出
+                  Sign out
                 </button>
               </Pressable>
             </>
@@ -78,17 +101,17 @@ export function SiteHeader() {
               <Pressable className="inline-block">
                 <Link
                   href="/register"
-                  className="rounded-full border border-[var(--sg-green)]/35 px-4 py-2 text-xs font-medium text-[var(--sg-green)]"
+                  className="focus-ring-clay rounded-full border-[2px] border-[var(--sg-green)]/35 px-3 py-2 text-xs font-medium text-[var(--sg-green)] transition-clay hover:bg-white/80 sm:px-4"
                 >
-                  注册
+                  Register
                 </Link>
               </Pressable>
               <Pressable className="inline-block">
                 <Link
                   href="/login"
-                  className="rounded-full bg-[var(--sg-cta)] px-4 py-2 text-xs font-medium text-white"
+                  className="focus-ring-clay rounded-full bg-[var(--sg-cta)] px-3 py-2 text-xs font-semibold text-white transition-clay hover:brightness-105 sm:px-4"
                 >
-                  {status === "loading" ? "…" : "登录"}
+                  {status === "loading" ? "…" : "Log in"}
                 </Link>
               </Pressable>
             </>

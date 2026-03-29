@@ -36,14 +36,14 @@ export default async function PetFeedPage() {
     <section className="section-surface py-14">
       <div className="section-wrap">
         <Reveal>
-          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">宠物 Ins</h1>
+          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Pet feed</h1>
         </Reveal>
         <Reveal delay={0.05}>
-          <p className="mt-2 text-sm text-zinc-600">仅展示当前登录账号关联宠物的动态。</p>
+          <p className="mt-2 text-sm text-zinc-600">Photo updates for pets linked to your signed-in account only.</p>
         </Reveal>
         <PetFeedGrid posts={items} />
         {posts.length === 0 ? (
-          <p className="mt-6 text-sm text-zinc-600">暂无动态。</p>
+          <p className="mt-6 text-sm text-zinc-600">No updates yet.</p>
         ) : null}
       </div>
     </section>

@@ -28,7 +28,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Stay Goldie | Boutique Dog Boarding",
-  description: "高端温暖家庭式狗狗寄养，包含预约、商城与宠物动态。",
+  description:
+    "Warm, home-style dog boarding in Canada with online booking, pet shop, and owner-only photo updates.",
 };
 
 export default function RootLayout({
@@ -38,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="zh-CN"
+      lang="en-CA"
       className={`${nunitoSans.variable} ${varelaRound.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--sg-bg)] text-[var(--sg-text)] font-sans">

@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { Pressable } from "@/components/motion/pressable";
 
 const links = [
-  { href: "/admin/bookings", label: "预约与档期" },
-  { href: "/admin/products", label: "商品与库存" },
-  { href: "/admin/pet-posts", label: "宠物动态" },
-  { href: "/admin/blog", label: "博客" },
-  { href: "/admin/forms", label: "问卷与资料" },
+  { href: "/admin/bookings", label: "Bookings" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/pet-posts", label: "Pet feed" },
+  { href: "/admin/blog", label: "Blog" },
+  { href: "/admin/forms", label: "Forms" },
 ] as const;
 
 export function AdminNav() {
@@ -18,7 +18,7 @@ export function AdminNav() {
   return (
     <nav
       className="border-b border-[var(--sg-border-subtle)] bg-[var(--sg-surface)]/90 backdrop-blur"
-      aria-label="管理后台导航"
+      aria-label="Admin navigation"
     >
       <div className="section-wrap py-3">
         <div className="flex flex-wrap gap-2 md:gap-1">

@@ -19,7 +19,7 @@ export default async function BlogDetailPage({
     notFound();
   }
 
-  const meta = `${post.category?.name ?? "未分类"} · ${post.publishedAt?.toLocaleDateString("zh-CN") ?? ""}`;
+  const meta = `${post.category?.name ?? "Uncategorized"} · ${post.publishedAt?.toLocaleDateString("en-CA") ?? ""}`;
 
   return (
     <BlogArticle

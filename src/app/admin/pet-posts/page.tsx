@@ -18,16 +18,16 @@ export default async function AdminPetPostsPage() {
   return (
     <section className="section-wrap py-14">
       <Reveal>
-        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：宠物动态发帖</h1>
+        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Admin · Pet feed composer</h1>
       </Reveal>
       <Reveal delay={0.05}>
         <div className="mt-6 card-elevated rounded-3xl p-6">
           <p className="text-sm text-zinc-600">
-            上传图片将请求预签名 URL（需配置 S3/R2）。也可直接填写可访问的图片 URL。发布后主人可在「宠物
-            Ins」中查看。
+            Uploads request a presigned URL (configure S3/R2). You can also paste public image URLs. Published posts show
+            on the owner-facing pet feed.
           </p>
           {pets.length === 0 ? (
-            <p className="mt-4 text-sm text-amber-800">数据库中暂无宠物，请先录入宠物档案。</p>
+            <p className="mt-4 text-sm text-amber-800">No pets in the database yet—create pet profiles first.</p>
           ) : (
             <PetPostForm pets={pets} />
           )}

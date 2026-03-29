@@ -14,7 +14,7 @@ export default async function AdminBlogPage() {
   return (
     <section className="section-wrap py-14">
       <Reveal>
-        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：博客发布</h1>
+        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Admin · Blog publishing</h1>
       </Reveal>
       <Reveal delay={0.05}>
         <div className="mt-6 card-elevated rounded-3xl p-6">
@@ -22,7 +22,7 @@ export default async function AdminBlogPage() {
             <StaggerItem>
               <input
                 className="w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm"
-                placeholder="文章标题"
+                placeholder="Post title"
                 disabled
               />
             </StaggerItem>
@@ -37,13 +37,14 @@ export default async function AdminBlogPage() {
               <textarea
                 className="w-full rounded-xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] p-3 text-sm"
                 rows={7}
-                placeholder="正文"
+                placeholder="Body"
                 disabled
               />
             </StaggerItem>
             <StaggerItem>
               <p className="text-xs text-zinc-500">
-                生产发布建议使用 MDX/CMS 或 Server Action 写入 BlogPost。
+                Wire this to MDX/CMS or a Server Action that writes to <code className="font-mono">BlogPost</code> for
+                production.
               </p>
             </StaggerItem>
           </StaggerContainer>

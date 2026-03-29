@@ -8,16 +8,16 @@ export default function AdminNewProductPage() {
       <Reveal>
         <p className="text-sm text-zinc-600">
           <Link href="/admin/products" className="text-[var(--sg-green)] underline underline-offset-4">
-            ← 商品列表
+            ← Products
           </Link>
         </p>
       </Reveal>
       <Reveal delay={0.05}>
-        <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">新建商品</h1>
+        <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">New product</h1>
       </Reveal>
       <Reveal delay={0.08}>
         <p className="mt-2 text-sm text-zinc-600">
-          slug 创建后尽量不要改，以免外链失效；促销价留空则结账按基础价。
+          Avoid changing the slug after launch so links stay valid. Leave sale price empty to charge the base price.
         </p>
       </Reveal>
       <div className="mt-8">

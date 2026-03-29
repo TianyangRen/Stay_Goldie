@@ -17,8 +17,10 @@ export default async function AdminProductsPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <Reveal>
           <div>
-            <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：商品与库存</h1>
-            <p className="mt-2 text-sm text-zinc-600">仅管理员可编辑；下架商品不会出现在商城列表与详情。</p>
+            <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Admin · Products & inventory</h1>
+            <p className="mt-2 text-sm text-zinc-600">
+              Only administrators can edit. Inactive products stay hidden in the storefront.
+            </p>
           </div>
         </Reveal>
         <Reveal delay={0.06}>
@@ -27,7 +29,7 @@ export default async function AdminProductsPage() {
               href="/admin/products/new"
               className="inline-flex justify-center rounded-full bg-[var(--sg-cta)] px-5 py-2.5 text-sm font-medium text-white"
             >
-              新建商品
+              New product
             </Link>
           </Pressable>
         </Reveal>
@@ -37,11 +39,11 @@ export default async function AdminProductsPage() {
           <table className="w-full text-left text-sm">
             <thead className="bg-[var(--sg-surface-alt)]">
               <tr>
-                <th className="px-4 py-3">商品</th>
+                <th className="px-4 py-3">Product</th>
                 <th className="px-4 py-3">slug</th>
-                <th className="px-4 py-3">价格 (CAD)</th>
-                <th className="px-4 py-3">库存</th>
-                <th className="px-4 py-3">状态</th>
+                <th className="px-4 py-3">Price (CAD)</th>
+                <th className="px-4 py-3">Stock</th>
+                <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -54,16 +56,16 @@ export default async function AdminProductsPage() {
                     {cad(product.salePriceCad ?? product.basePriceCad).toFixed(2)}
                     {product.salePriceCad ? (
                       <span className="ml-1 text-xs text-zinc-500">
-                        (基础 {cad(product.basePriceCad).toFixed(2)})
+                        (base {cad(product.basePriceCad).toFixed(2)})
                       </span>
                     ) : null}
                   </td>
                   <td className="px-4 py-3">{product.inventory?.stock ?? 0}</td>
                   <td className="px-4 py-3">
                     {product.isActive ? (
-                      <span className="text-green-700">上架</span>
+                      <span className="text-green-700">Active</span>
                     ) : (
-                      <span className="text-zinc-500">下架</span>
+                      <span className="text-zinc-500">Inactive</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-right">
@@ -72,7 +74,7 @@ export default async function AdminProductsPage() {
                         href={`/admin/products/${product.id}/edit`}
                         className="font-medium text-[var(--sg-green)] underline underline-offset-4"
                       >
-                        编辑
+                        Edit
                       </Link>
                     </Pressable>
                   </td>
@@ -83,7 +85,7 @@ export default async function AdminProductsPage() {
         </div>
       </Reveal>
       {products.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-600">暂无商品，点击「新建商品」添加。</p>
+        <p className="mt-6 text-sm text-zinc-600">No products yet—use “New product” to add one.</p>
       ) : null}
     </section>
   );

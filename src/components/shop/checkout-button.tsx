@@ -11,7 +11,7 @@ type Props = {
   label?: string;
 };
 
-export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe 结账" }: Props) {
+export function CheckoutButton({ productId, quantity = 1, label = "Checkout with Stripe" }: Props) {
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const reduced = useReducedMotion() ?? false;
@@ -30,13 +30,13 @@ export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe
     const data = (await res.json()) as { url?: string; error?: string };
 
     if (res.status === 401) {
-      setMessage("请先登录后再结账。");
+      setMessage("Please sign in before checkout.");
       setPending(false);
       return;
     }
 
     if (!res.ok || !data.url) {
-      setMessage(data.error ?? "无法创建结账会话，请检查 Stripe 环境变量。");
+      setMessage(data.error ?? "Could not create checkout session. Check Stripe environment variables.");
       setPending(false);
       return;
     }
@@ -55,7 +55,7 @@ export function CheckoutButton({ productId, quantity = 1, label = "使用 Stripe
           transition={springTap}
           className="rounded-full bg-[var(--sg-cta)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
         >
-          {pending ? "跳转中…" : label}
+          {pending ? "Redirecting…" : label}
         </motion.button>
       </Breath>
       {message ? <p className="text-xs text-amber-800">{message}</p> : null}

@@ -37,7 +37,7 @@ export default async function BookingPage() {
 
   const recentItems = recent.map((booking) => ({
     id: booking.id,
-    line: `${booking.checkInDate.toLocaleDateString("zh-CN")} - ${booking.checkOutDate.toLocaleDateString("zh-CN")} · ${
+    line: `${booking.checkInDate.toLocaleDateString("en-CA")} – ${booking.checkOutDate.toLocaleDateString("en-CA")} · ${
       booking.status
     } · CAD ${cad(booking.estimatedTotalCad).toFixed(2)}`,
   }));

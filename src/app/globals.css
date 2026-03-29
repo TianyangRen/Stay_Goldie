@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /*
- * Pet Tech palette + Soft Rounded typography (approved: UI UX Pro Max DB).
- * --sg-green: legacy token name, value = primary orange #F97316.
+ * Pet Tech palette + Soft Rounded type (UI UX Pro Max).
+ * Claymorphism (styles.csv): 16–24px radius, 3–4px borders, inner+outer shadows, ~200ms soft press.
  */
 :root {
   --sg-bg: #fff7ed;
@@ -19,6 +19,13 @@
   --sg-border-subtle: rgba(154, 52, 18, 0.09);
   --sg-border-strong: rgba(154, 52, 18, 0.15);
   --sg-shadow-soft: 0 12px 40px -18px rgba(249, 115, 22, 0.22);
+  /* Clay: outer lift + subtle inset (contrast-safe on warm BG) */
+  --sg-clay-radius: 1.25rem;
+  --sg-clay-border: rgba(255, 255, 255, 0.72);
+  --sg-clay-shadow-out: 6px 6px 18px rgba(249, 115, 22, 0.14),
+    -3px -3px 14px rgba(255, 255, 255, 0.95);
+  --sg-clay-shadow-in: inset 1px 1px 6px rgba(255, 255, 255, 0.75),
+    inset -2px -2px 10px rgba(234, 88, 12, 0.06);
 }
 
 @theme inline {
@@ -45,6 +52,58 @@ body {
   color: var(--sg-text);
 }
 
+/* Pet-spa / grooming-demo style: airy hero wash + soft trust surfaces */
+.pet-spa-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.pet-spa-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto -10%;
+  height: min(72vh, 520px);
+  background: radial-gradient(ellipse 70% 60% at 18% 35%, rgba(37, 99, 235, 0.11), transparent 58%),
+    radial-gradient(ellipse 55% 50% at 92% 18%, rgba(249, 115, 22, 0.14), transparent 52%),
+    radial-gradient(ellipse 50% 45% at 70% 85%, rgba(20, 184, 166, 0.08), transparent 55%);
+  pointer-events: none;
+}
+
+.pet-spa-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle grain so gradients feel less “plastic” */
+.pet-spa-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/** Playful text link: underline grows on hover */
+.link-playful {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.link-playful:hover {
+  background-size: 100% 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-playful {
+    transition-duration: 0.01ms;
+  }
+}
+
 .organic-mask {
   border-radius: 40% 60% 47% 53% / 42% 30% 70% 58%;
 }
@@ -61,10 +120,38 @@ body {
   background-color: var(--sg-surface-alt);
 }
 
+/** Raised “clay” surface: thick light border + outer + inset shadow */
 .card-elevated {
+  border-radius: var(--sg-clay-radius);
   background-color: var(--sg-surface-elevated);
-  border: 1px solid var(--sg-border-subtle);
-  box-shadow: var(--sg-shadow-soft);
+  border: 3px solid var(--sg-clay-border);
+  box-shadow: var(--sg-clay-shadow-out), var(--sg-clay-shadow-in);
+}
+
+/** Hero / spotlight panels: slightly deeper clay */
+.clay-hero-frame {
+  border-radius: 1.75rem;
+  border: 3px solid var(--sg-clay-border);
+  box-shadow: var(--sg-clay-shadow-out), var(--sg-clay-shadow-in);
+}
+
+/** Micro-interaction timing (UI Pro Max: soft press ~200ms ease-out) */
+.transition-clay {
+  transition-property: transform, box-shadow, color, background-color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-clay {
+    transition-duration: 0.01ms;
+  }
+}
+
+/** Keyboard focus ring for primary interactive elements */
+.focus-ring-clay:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--sg-bg), 0 0 0 4px var(--sg-cta);
 }
 
 @media (prefers-reduced-motion: reduce) {

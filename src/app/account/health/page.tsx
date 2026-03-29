@@ -25,15 +25,18 @@ export default async function AccountHealthPage() {
     orderBy: { createdAt: "asc" },
   });
 
+  const empty = "Not provided";
+
   return (
     <section className="section-surface py-14">
       <div className="section-wrap">
         <Reveal>
-          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">入托问卷与健康档案</h1>
+          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Intake & health records</h1>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="mt-2 text-sm text-zinc-600">
-            字段全部可选填写；疫苗证明上传请使用预签名接口写入私有存储。
+            Every field is optional for now. Vaccine uploads should flow through the presigned URL flow into private
+            storage.
           </p>
         </Reveal>
         <div className="mt-8 grid gap-5">
@@ -48,16 +51,17 @@ export default async function AccountHealthPage() {
               >
                 <h2 className="text-lg font-semibold">{pet.name}</h2>
                 <div className="mt-4 grid gap-3 text-sm text-zinc-700 md:grid-cols-2">
-                  <p>饮食禁忌：{profile?.dietRestrictions ?? "未填写"}</p>
-                  <p>药物：{profile?.medications ?? "未填写"}</p>
-                  <p>社交行为：{profile?.socialBehavior ?? "未填写"}</p>
-                  <p>紧急联系人：{profile?.emergencyContactName ?? "未填写"}</p>
-                  <p>兽医信息：{profile?.vetName ?? "未填写"}</p>
-                  <p>常去宠物医院：{clinic?.clinicName ?? "未填写"}</p>
+                  <p>Diet restrictions: {profile?.dietRestrictions ?? empty}</p>
+                  <p>Medications: {profile?.medications ?? empty}</p>
+                  <p>Social behaviour: {profile?.socialBehavior ?? empty}</p>
+                  <p>Emergency contact: {profile?.emergencyContactName ?? empty}</p>
+                  <p>Veterinarian: {profile?.vetName ?? empty}</p>
+                  <p>Preferred clinic: {clinic?.clinicName ?? empty}</p>
                 </div>
                 {profile?.vaccineDocuments.length ? (
                   <p className="mt-3 text-xs text-zinc-500">
-                    已登记 {profile.vaccineDocuments.length} 份疫苗相关文件（链接由服务端安全存储）。
+                    {profile.vaccineDocuments.length} vaccine file
+                    {profile.vaccineDocuments.length === 1 ? "" : "s"} on file (stored securely server-side).
                   </p>
                 ) : null}
               </StaggerSurfaceItem>

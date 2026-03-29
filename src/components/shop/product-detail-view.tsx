@@ -34,7 +34,7 @@ export function ProductDetailView({
                   <Image src={imageUrl} alt={name} fill className="object-cover" />
                 ) : (
                   <div className="flex h-full items-center justify-center bg-[var(--sg-surface-alt)] text-sm text-zinc-500">
-                    暂无图片
+                    No image
                   </div>
                 )}
               </div>
@@ -49,7 +49,7 @@ export function ProductDetailView({
             </StaggerItem>
             <StaggerItem>
               <p className="text-sm font-medium">
-                {priceLabel} · 库存 {stock}
+                {priceLabel} · Stock {stock}
               </p>
             </StaggerItem>
             <StaggerItem>

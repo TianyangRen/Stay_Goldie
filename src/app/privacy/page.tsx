@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import { LegalDoc } from "@/components/legal/legal-doc";
 
 export const metadata: Metadata = {
-  title: "隐私政策 | Stay Goldie",
-  description: "Stay Goldie 隐私政策（占位摘要，正式运营前请由法律顾问定稿）。",
+  title: "Privacy | Stay Goldie",
+  description: "Summary placeholder for Stay Goldie privacy practices—replace with counsel-reviewed copy before launch.",
 };
 
 export default function PrivacyPage() {
   return (
     <LegalDoc
-      badge="占位页面 · Path B"
-      title="隐私政策"
-      intro="本页为上线前摘要占位，不构成完整法律文件。正式对外收款与服务前，请结合业务实际（采集的个人信息类型、存储位置、第三方服务商如支付/邮件/云存储）由律师或合规顾问定稿，并替换本页全文。"
+      badge="Placeholder · Path B"
+      title="Privacy policy"
+      intro="This page is a pre-launch summary and not a complete legal document. Before accepting payments or providing boarding or retail services, work with counsel to cover what you collect, where it is stored, and subprocessors such as payments, email, and object storage—then replace this page in full."
       bullets={[
-        "我们可能处理您提供的联系信息与订单、预约相关信息，用于履约与客户支持。",
-        "支付由 Stripe 等第三方处理；请同时查阅其隐私说明。",
-        "您可通过页脚的联系方式向我们咨询隐私相关请求（具体权利以适用法律为准）。",
+        "We may process contact details plus booking and order information to fulfill services and support pet parents.",
+        "Payments are handled by Stripe and other vendors; review their privacy notices as well.",
+        "Reach us through the contact details in the footer for privacy requests (subject to applicable law).",
       ]}
     />
   );

@@ -34,7 +34,7 @@ export function LoginForm() {
     setPending(false);
 
     if (result?.error) {
-      setError("邮箱或密码不正确。");
+      setError("Incorrect email or password.");
       return;
     }
 
@@ -46,7 +46,7 @@ export function LoginForm() {
       <StaggerContainer className="space-y-4">
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            邮箱
+            Email
             <input
               name="email"
               type="email"
@@ -59,7 +59,7 @@ export function LoginForm() {
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            密码
+            Password
             <input
               name="password"
               type="password"
@@ -78,20 +78,20 @@ export function LoginForm() {
             transition={springTap}
             className="mt-1 w-full rounded-2xl bg-[var(--sg-cta)] px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
           >
-            {pending ? "登录中…" : "登录"}
+            {pending ? "Signing in…" : "Sign in"}
           </motion.button>
         </StaggerItem>
         <StaggerItem>
           <p className="text-center text-sm text-zinc-600">
-            还没有账号？{" "}
+            New here?{" "}
             <Link href="/register" className="font-medium text-[var(--sg-green)] underline underline-offset-4">
-              注册
+              Create an account
             </Link>
           </p>
         </StaggerItem>
         <StaggerItem>
           <p className="text-xs leading-6 text-zinc-500">
-            演示账号：owner@example.com / Owner123! · 管理员：admin@staygoldie.local / Admin123!
+            Demo owner: owner@example.com / Owner123! · Admin: admin@staygoldie.local / Admin123!
           </p>
         </StaggerItem>
       </StaggerContainer>

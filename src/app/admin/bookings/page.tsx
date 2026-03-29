@@ -17,7 +17,7 @@ export default async function AdminBookingsPage() {
   return (
     <section className="section-wrap py-14">
       <Reveal>
-        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">管理端：档期与预约</h1>
+        <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Admin · Bookings & calendar</h1>
       </Reveal>
       <div className="mt-6 grid gap-4">
         {bookings.map((booking, index) => (
@@ -27,22 +27,22 @@ export default async function AdminBookingsPage() {
             className="card-elevated rounded-2xl p-5"
           >
             <p className="text-sm font-medium">
-              {booking.checkInDate.toLocaleDateString("zh-CN")} -{" "}
-              {booking.checkOutDate.toLocaleDateString("zh-CN")}
+              {booking.checkInDate.toLocaleDateString("en-CA")} –{" "}
+              {booking.checkOutDate.toLocaleDateString("en-CA")}
             </p>
             <p className="mt-2 text-sm text-zinc-600">
-              主人：{booking.owner.email} · 状态：{booking.status} · 订金 CAD{" "}
+              Owner: {booking.owner.email} · Status: {booking.status} · Deposit CAD{" "}
               {cad(booking.depositCad).toFixed(2)}
             </p>
             <p className="mt-1 text-xs text-zinc-500">
-              宠物：{booking.pets.map((bp) => bp.pet.name).join("、")}
+              Pets: {booking.pets.map((bp) => bp.pet.name).join(", ")}
             </p>
           </StaggerSurfaceItem>
         ))}
       </div>
       {bookings.length === 0 ? (
         <Reveal>
-          <p className="mt-6 text-sm text-zinc-600">暂无预约。</p>
+          <p className="mt-6 text-sm text-zinc-600">No bookings yet.</p>
         </Reveal>
       ) : null}
     </section>

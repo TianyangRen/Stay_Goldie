@@ -43,7 +43,7 @@ export function ShopProductCard({
           <Image src={imageUrl} alt={name} fill className="object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center bg-[var(--sg-surface-alt)] text-sm text-zinc-500">
-            暂无图片
+            No image
           </div>
         )}
       </div>
@@ -51,13 +51,13 @@ export function ShopProductCard({
         <h2 className="font-semibold">{name}</h2>
         <p className="mt-2 line-clamp-3 text-sm text-zinc-600">{description}</p>
         <p className="mt-3 text-sm">
-          {priceLabel} · 库存 {stock}
+          {priceLabel} · Stock {stock}
         </p>
         <Link
           href={`/shop/${slug}`}
           className="mt-4 inline-block rounded-full bg-[var(--sg-cta)] px-4 py-2 text-xs text-white"
         >
-          查看商品
+          View product
         </Link>
       </div>
     </motion.article>

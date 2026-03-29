@@ -14,10 +14,10 @@ export function SiteFooter() {
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-zinc-600 md:flex-row md:flex-wrap md:items-center md:justify-between md:px-6">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href="/privacy" className="underline-offset-4 hover:text-zinc-900 hover:underline">
-              隐私政策
+              Privacy
             </Link>
             <Link href="/terms" className="underline-offset-4 hover:text-zinc-900 hover:underline">
-              服务条款
+              Terms
             </Link>
           </div>
           <div className="flex flex-col gap-1 md:items-end md:text-right">

@@ -15,8 +15,8 @@ export async function sendBookingConfirmationEmail(to: string, bookingId: string
   await resend.emails.send({
     from,
     to,
-    subject: "预约确认",
-    html: `<p>你的预约 ${bookingId} 已确认。感谢选择 Stay Goldie。</p>`,
+    subject: "Booking confirmed",
+    html: `<p>Your booking ${bookingId} is confirmed. Thank you for choosing Stay Goldie.</p>`,
   });
 }
 
@@ -29,8 +29,8 @@ export async function sendOrderPaidEmail(to: string, orderId: string) {
   await resend.emails.send({
     from,
     to,
-    subject: "订单已支付",
-    html: `<p>订单 ${orderId} 已支付成功，我们会尽快安排发货。</p>`,
+    subject: "Order paid",
+    html: `<p>Order ${orderId} was paid successfully. We will prepare it for fulfillment.</p>`,
   });
 }
 

@@ -14,10 +14,10 @@ export type CreateBookingState =
 export async function createBookingDraft(input: BookingDraftInput): Promise<CreateBookingState> {
   const session = await auth();
   if (!session?.user?.id) {
-    return { ok: false, message: "请先登录。" };
+    return { ok: false, message: "Please sign in first." };
   }
   if (session.user.role !== "OWNER") {
-    return { ok: false, message: "预约仅支持主人账号，管理员请通过后台管理档期。" };
+    return { ok: false, message: "Only pet-owner accounts can book. Admins should use the dashboard." };
   }
 
   const result = await persistBookingDraft(session.user.id, input);

@@ -16,7 +16,7 @@ export default async function ShopPage() {
     <section className="section-surface py-14">
       <div className="section-wrap">
         <Reveal>
-          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">宠物用品商城</h1>
+          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">Pet boutique shop</h1>
         </Reveal>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product, index) => {
@@ -38,9 +38,9 @@ export default async function ShopPage() {
         </div>
         {products.length === 0 ? (
           <p className="mt-8 text-sm text-zinc-600">
-            暂无商品。请配置数据库并运行{" "}
-            <code className="rounded bg-[var(--sg-surface-alt)] px-1">npm run db:push:direct</code> 与{" "}
-            <code className="rounded bg-[var(--sg-surface-alt)] px-1">npm run db:seed</code>。
+            No products yet. Set up the database and run{" "}
+            <code className="rounded bg-[var(--sg-surface-alt)] px-1">npm run db:push:direct</code> and{" "}
+            <code className="rounded bg-[var(--sg-surface-alt)] px-1">npm run db:seed</code>.
           </p>
         ) : null}
       </div>

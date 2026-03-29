@@ -25,7 +25,7 @@ export default async function AccountOrdersPage() {
     <section className="section-surface py-14">
       <div className="section-wrap">
         <Reveal>
-          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">我的订单</h1>
+          <h1 className="text-3xl font-semibold text-[var(--sg-green)]">My orders</h1>
         </Reveal>
         <div className="mt-6 space-y-4">
           {orders.map((order, index) => (
@@ -35,9 +35,9 @@ export default async function AccountOrdersPage() {
               className="card-elevated rounded-2xl p-5"
             >
               <p className="text-sm font-medium text-zinc-800">
-                订单 {order.id.slice(0, 8)}… · {order.status}
+                Order {order.id.slice(0, 8)}… · {order.status}
               </p>
-              <p className="mt-1 text-xs text-zinc-500">{order.createdAt.toLocaleString("zh-CN")}</p>
+              <p className="mt-1 text-xs text-zinc-500">{order.createdAt.toLocaleString("en-CA")}</p>
               <ul className="mt-3 space-y-1 text-sm text-zinc-600">
                 {order.items.map((item) => (
                   <li key={item.id}>
@@ -45,13 +45,13 @@ export default async function AccountOrdersPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-sm font-medium">合计 CAD {cad(order.totalCad).toFixed(2)}</p>
+              <p className="mt-2 text-sm font-medium">Total CAD {cad(order.totalCad).toFixed(2)}</p>
             </StaggerSurfaceItem>
           ))}
         </div>
         {orders.length === 0 ? (
           <Reveal>
-            <p className="mt-6 text-sm text-zinc-600">暂无订单。</p>
+            <p className="mt-6 text-sm text-zinc-600">No orders yet.</p>
           </Reveal>
         ) : null}
       </div>

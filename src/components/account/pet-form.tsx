@@ -48,7 +48,7 @@ export function PetForm({ mode, petId, initial }: Props) {
         ? await createPet(payload)
         : petId
           ? await updatePet(petId, payload)
-          : { ok: false as const, message: "缺少宠物 ID。" };
+          : { ok: false as const, message: "Missing pet ID." };
 
     setPending(false);
     if (!result.ok) {
@@ -61,7 +61,7 @@ export function PetForm({ mode, petId, initial }: Props) {
 
   async function onDelete() {
     if (!petId || mode !== "edit") return;
-    if (!window.confirm("确定删除该宠物？此操作不可撤销（若有预约或动态则无法删除）。")) return;
+    if (!window.confirm("Delete this pet? This cannot be undone (blocked when bookings or posts exist).")) return;
     setDelPending(true);
     setError(null);
     const result = await deletePet(petId);
@@ -93,7 +93,7 @@ export function PetForm({ mode, petId, initial }: Props) {
       <StaggerContainer className="space-y-4">
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            名字 <span className="text-red-600">*</span>
+            Name <span className="text-red-600">*</span>
             <input
               name="name"
               type="text"
@@ -101,47 +101,47 @@ export function PetForm({ mode, petId, initial }: Props) {
               maxLength={80}
               defaultValue={init.name}
               className={field}
-              placeholder="例如：Mochi"
+              placeholder="e.g. Mochi"
             />
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            品种
+            Breed
             <input
               name="breed"
               type="text"
               maxLength={120}
               defaultValue={init.breed ?? ""}
               className={field}
-              placeholder="例如：柯基"
+              placeholder="e.g. Corgi"
             />
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            体型（影响寄养估价）
+            Size (affects boarding quote)
             <select
               name="sizeTier"
               defaultValue={init.sizeTier ?? ""}
               className={`${field} bg-white`}
             >
-              <option value="">未选择</option>
-              <option value="small">小型</option>
-              <option value="medium">中型</option>
-              <option value="large">大型</option>
+              <option value="">Not set</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
             </select>
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            生日
+            Birthday
             <input name="birthDate" type="date" defaultValue={birthValue} className={field} />
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            头像图片 URL
+            Avatar image URL
             <input
               name="avatarUrl"
               type="url"
@@ -154,7 +154,8 @@ export function PetForm({ mode, petId, initial }: Props) {
         </StaggerItem>
         <StaggerItem>
           <p className="text-xs text-zinc-500">
-            可使用图床或可公开访问的图片链接。站内展示会尽量优化加载；域名未列入白名单时可能以原图加载。
+            Use any HTTPS URL that is publicly reachable. The site optimizes common hosts when possible; otherwise it may
+            load the original image.
           </p>
         </StaggerItem>
         <StaggerItem>
@@ -167,13 +168,13 @@ export function PetForm({ mode, petId, initial }: Props) {
               transition={springTap}
               className="rounded-full bg-[var(--sg-cta)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
             >
-              {pending ? "保存中…" : mode === "create" ? "添加宠物" : "保存修改"}
+              {pending ? "Saving…" : mode === "create" ? "Add pet" : "Save changes"}
             </motion.button>
             <Link
               href="/account/pets"
               className="rounded-full border border-[var(--sg-border-subtle)] px-6 py-2.5 text-sm font-medium text-zinc-800"
             >
-              取消
+              Cancel
             </Link>
             {mode === "edit" ? (
               <motion.button
@@ -184,7 +185,7 @@ export function PetForm({ mode, petId, initial }: Props) {
                 transition={springTap}
                 className="rounded-full border border-red-200 bg-red-50 px-6 py-2.5 text-sm font-medium text-red-800 disabled:opacity-60"
               >
-                {delPending ? "删除中…" : "删除"}
+                {delPending ? "Deleting…" : "Delete"}
               </motion.button>
             ) : null}
           </div>

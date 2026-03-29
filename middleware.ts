@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
     if (!token) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    // 主任账户功能区：管理员请走 /admin
+    // Owner account area; admins should use /admin
     if (path.startsWith("/account") && token.role === "ADMIN") {
       return NextResponse.redirect(new URL("/admin", request.url));
     }

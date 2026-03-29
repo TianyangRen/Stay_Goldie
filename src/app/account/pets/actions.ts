@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const petFields = z.object({
-  name: z.string().min(1, "请填写宠物名字").max(80),
+  name: z.string().min(1, "Pet name is required").max(80),
   breed: z.string().max(120).optional(),
   sizeTier: z.preprocess(
     (v) => (v === "" || v === undefined ? undefined : v),
@@ -40,14 +40,14 @@ export async function createPet(input: {
   avatarUrl?: string;
 }): Promise<PetMutationState> {
   const session = await auth();
-  if (!session?.user?.id) return { ok: false, message: "请先登录。" };
+  if (!session?.user?.id) return { ok: false, message: "Please sign in first." };
   if (session.user.role !== "OWNER") {
-    return { ok: false, message: "仅主人账号可管理宠物，管理员请使用后台。" };
+    return { ok: false, message: "Only owner accounts can manage pets. Admins should use the dashboard." };
   }
 
   const parsed = petFields.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, message: parsed.error.flatten().fieldErrors.name?.[0] ?? "输入无效。" };
+    return { ok: false, message: parsed.error.flatten().fieldErrors.name?.[0] ?? "Invalid input." };
   }
 
   const birth =
@@ -55,7 +55,7 @@ export async function createPet(input: {
       ? new Date(`${parsed.data.birthDate}T12:00:00`)
       : null;
   if (birth && Number.isNaN(birth.getTime())) {
-    return { ok: false, message: "生日日期无效。" };
+    return { ok: false, message: "Birthday is invalid." };
   }
 
   const avatarUrl = parseOptionalUrl(parsed.data.avatarUrl);
@@ -87,19 +87,19 @@ export async function updatePet(
   },
 ): Promise<PetMutationState> {
   const session = await auth();
-  if (!session?.user?.id) return { ok: false, message: "请先登录。" };
+  if (!session?.user?.id) return { ok: false, message: "Please sign in first." };
   if (session.user.role !== "OWNER") {
-    return { ok: false, message: "仅主人账号可管理宠物，管理员请使用后台。" };
+    return { ok: false, message: "Only owner accounts can manage pets. Admins should use the dashboard." };
   }
 
   const pet = await prisma.pet.findFirst({
     where: { id: petId, ownerId: session.user.id },
   });
-  if (!pet) return { ok: false, message: "找不到该宠物。" };
+  if (!pet) return { ok: false, message: "Pet not found." };
 
   const parsed = petFields.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, message: parsed.error.flatten().fieldErrors.name?.[0] ?? "输入无效。" };
+    return { ok: false, message: parsed.error.flatten().fieldErrors.name?.[0] ?? "Invalid input." };
   }
 
   const birth =
@@ -107,7 +107,7 @@ export async function updatePet(
       ? new Date(`${parsed.data.birthDate}T12:00:00`)
       : null;
   if (birth && Number.isNaN(birth.getTime())) {
-    return { ok: false, message: "生日日期无效。" };
+    return { ok: false, message: "Birthday is invalid." };
   }
 
   const avatarUrl = parseOptionalUrl(parsed.data.avatarUrl);
@@ -131,23 +131,23 @@ export async function updatePet(
 
 export async function deletePet(petId: string): Promise<PetMutationState> {
   const session = await auth();
-  if (!session?.user?.id) return { ok: false, message: "请先登录。" };
+  if (!session?.user?.id) return { ok: false, message: "Please sign in first." };
   if (session.user.role !== "OWNER") {
-    return { ok: false, message: "仅主人账号可管理宠物。" };
+    return { ok: false, message: "Only owner accounts can manage pets." };
   }
 
   const pet = await prisma.pet.findFirst({
     where: { id: petId, ownerId: session.user.id },
     include: { _count: { select: { bookingPets: true, posts: true } } },
   });
-  if (!pet) return { ok: false, message: "找不到该宠物。" };
+  if (!pet) return { ok: false, message: "Pet not found." };
 
   if (pet._count.bookingPets > 0) {
-    return { ok: false, message: "该宠物已关联预约记录，无法删除。可联系管理员处理。" };
+    return { ok: false, message: "This pet has bookings and cannot be deleted—contact support." };
   }
 
   if (pet._count.posts > 0) {
-    return { ok: false, message: "该宠物已有动态帖子，无法删除。" };
+    return { ok: false, message: "This pet has feed posts and cannot be deleted." };
   }
 
   const hasHealth = await prisma.petHealthProfile.findUnique({
@@ -155,7 +155,7 @@ export async function deletePet(petId: string): Promise<PetMutationState> {
     select: { id: true },
   });
   if (hasHealth) {
-    return { ok: false, message: "该宠物已有健康档案数据，暂不提供自助删除。请联系管理员。" };
+    return { ok: false, message: "Health records exist for this pet—contact an admin to remove it." };
   }
 
   await prisma.pet.delete({ where: { id: petId } });

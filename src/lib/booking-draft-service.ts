@@ -24,10 +24,10 @@ function parseStayDateRange(checkIn: string, checkOut: string): DateRange {
   const checkOutDate = new Date(`${checkOut}T12:00:00`);
 
   if (Number.isNaN(checkInDate.getTime()) || Number.isNaN(checkOutDate.getTime())) {
-    return { ok: false, message: "日期格式无效。" };
+    return { ok: false, message: "Invalid date format." };
   }
   if (checkOutDate <= checkInDate) {
-    return { ok: false, message: "离店日期须晚于入住日期。" };
+    return { ok: false, message: "Check-out must be after check-in." };
   }
   return { ok: true, checkInDate, checkOutDate };
 }
@@ -41,7 +41,7 @@ export async function persistBookingDraft(
   input: BookingDraftInput,
 ): Promise<BookingDraftResult> {
   if (input.petIds.length === 0) {
-    return { ok: false, message: "请至少选择一只宠物。" };
+    return { ok: false, message: "Select at least one pet." };
   }
 
   const pets = await prisma.pet.findMany({
@@ -49,7 +49,7 @@ export async function persistBookingDraft(
   });
 
   if (pets.length !== input.petIds.length) {
-    return { ok: false, message: "宠物选择无效。" };
+    return { ok: false, message: "Invalid pet selection." };
   }
 
   const range = parseStayDateRange(input.checkIn, input.checkOut);

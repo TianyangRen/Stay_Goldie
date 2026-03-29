@@ -7,20 +7,20 @@ const slugSchema = z
   .string()
   .min(2)
   .max(120)
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug 仅小写英文、数字与连字符，例如 low-allergy-food-2kg");
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers, and hyphens only, e.g. low-allergy-food-2kg");
 
 /** Raw admin form / Server Action payload before DB write. */
 export const adminProductFormSchema = z.object({
-  name: z.string().min(1, "请填写名称").max(200),
+  name: z.string().min(1, "Name is required").max(200),
   slug: slugSchema,
-  description: z.string().min(1, "请填写描述").max(10000),
+  description: z.string().min(1, "Description is required").max(10000),
   imageUrl: z.string().max(2048).optional(),
-  basePriceCad: z.coerce.number().positive("基础价须大于 0"),
+  basePriceCad: z.coerce.number().positive("Base price must be greater than 0"),
   salePriceCad: z.preprocess(
     (v) => (v === "" || v === null || v === undefined ? undefined : v),
     z.coerce.number().positive().optional(),
   ),
-  stock: z.coerce.number().int().min(0, "库存不能为负"),
+  stock: z.coerce.number().int().min(0, "Stock cannot be negative"),
   lowStockLevel: z.coerce.number().int().min(0),
   isActive: z.boolean(),
 });
@@ -61,7 +61,7 @@ function firstZodMessage(zodError: z.ZodError): string {
     err.name?.[0] ??
     err.description?.[0] ??
     err.basePriceCad?.[0] ??
-    "输入无效"
+    "Invalid input"
   );
 }
 
@@ -78,7 +78,7 @@ export function parseAdminProductInput(
 
   const imageUrl = parseHttpsImageUrl(parsed.data.imageUrl);
   if (parsed.data.imageUrl?.trim() && !imageUrl) {
-    return { ok: false, message: "图片 URL 无效。" };
+    return { ok: false, message: "Image URL is invalid." };
   }
 
   const salePriceCad =

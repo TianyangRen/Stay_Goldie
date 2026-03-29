@@ -28,7 +28,7 @@ export function PetPostForm({ pets }: Props) {
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
     if (!petId) {
-      setState({ ok: false, message: "请先选择宠物。" });
+      setState({ ok: false, message: "Choose a pet first." });
       return;
     }
 
@@ -39,7 +39,7 @@ export function PetPostForm({ pets }: Props) {
     try {
       for (const file of Array.from(files)) {
         if (!file.type.startsWith("image/")) {
-          setState({ ok: false, message: "仅支持图片文件。" });
+          setState({ ok: false, message: "Only image uploads are supported." });
           return;
         }
 
@@ -62,7 +62,7 @@ export function PetPostForm({ pets }: Props) {
         if (!presign.ok) {
           setState({
             ok: false,
-            message: data.error ?? "预签名失败。可改用下方「图片 URL」手动填写。",
+            message: data.error ?? "Presign failed. Paste public image URLs below instead.",
           });
           return;
         }
@@ -74,7 +74,7 @@ export function PetPostForm({ pets }: Props) {
         });
 
         if (!put.ok) {
-          setState({ ok: false, message: "上传到对象存储失败。" });
+          setState({ ok: false, message: "Upload to object storage failed." });
           return;
         }
 
@@ -84,7 +84,7 @@ export function PetPostForm({ pets }: Props) {
           setState({
             ok: false,
             message:
-              "已上传但未返回公开 URL。请设置 S3_PUBLIC_BASE_URL，或在下方手动填写可访问的图片地址。",
+              "Upload finished but no public URL returned. Set S3_PUBLIC_BASE_URL or paste reachable URLs below.",
           });
           return;
         }
@@ -123,7 +123,7 @@ export function PetPostForm({ pets }: Props) {
   return (
     <form key={formKey} className="mt-5 grid gap-4 md:grid-cols-2" onSubmit={onSubmit}>
       <label className="text-sm text-zinc-700 md:col-span-2">
-        宠物
+        Pet
         <select
           name="petId"
           required
@@ -131,7 +131,7 @@ export function PetPostForm({ pets }: Props) {
           onChange={(e) => setPetId(e.target.value)}
           className="mt-2 w-full rounded-xl border border-black/10 p-3 text-sm"
         >
-          <option value="">请选择</option>
+          <option value="">Select…</option>
           {pets.map((pet) => (
             <option key={pet.id} value={pet.id}>
               {pet.name}
@@ -141,7 +141,7 @@ export function PetPostForm({ pets }: Props) {
       </label>
 
       <div className="md:col-span-2">
-        <p className="text-sm text-zinc-700">图片（预签名上传，需配置 S3）</p>
+        <p className="text-sm text-zinc-700">Images (presigned upload—S3/R2 required)</p>
         <input
           ref={fileRef}
           type="file"
@@ -151,7 +151,7 @@ export function PetPostForm({ pets }: Props) {
           disabled={uploading || pending}
           onChange={(e) => void handleFiles(e.target.files)}
         />
-        {uploading ? <p className="mt-1 text-xs text-zinc-500">上传中…</p> : null}
+        {uploading ? <p className="mt-1 text-xs text-zinc-500">Uploading…</p> : null}
         {imageUrls.length > 0 ? (
           <ul className="mt-2 space-y-1 text-xs text-zinc-600">
             {imageUrls.map((url) => (
@@ -164,7 +164,7 @@ export function PetPostForm({ pets }: Props) {
       </div>
 
       <label className="text-sm text-zinc-700 md:col-span-2">
-        图片 URL（每行一个，未配置对象存储时使用）
+        Image URLs (one per line—use when object storage is not wired up)
         <textarea
           value={extraUrls}
           onChange={(e) => setExtraUrls(e.target.value)}
@@ -175,13 +175,13 @@ export function PetPostForm({ pets }: Props) {
       </label>
 
       <label className="text-sm text-zinc-700 md:col-span-2">
-        动态文案
+        Caption
         <textarea
           name="caption"
           required
           rows={4}
           className={field}
-          placeholder="今天的小记录…"
+          placeholder="Today's adventure…"
         />
       </label>
 
@@ -192,14 +192,14 @@ export function PetPostForm({ pets }: Props) {
         transition={springTap}
         className="rounded-full bg-[var(--sg-cta)] px-5 py-2 text-sm font-medium text-white disabled:opacity-60 md:col-span-2"
       >
-        {pending ? "发布中…" : "发布动态"}
+        {pending ? "Publishing…" : "Publish update"}
       </motion.button>
 
       {state?.ok === false ? (
         <p className="text-sm text-red-600 md:col-span-2">{state.message}</p>
       ) : null}
       {state?.ok ? (
-        <p className="text-sm text-green-800 md:col-span-2">发布成功。</p>
+        <p className="text-sm text-green-800 md:col-span-2">Published successfully.</p>
       ) : null}
     </form>
   );

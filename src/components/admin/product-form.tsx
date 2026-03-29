@@ -85,7 +85,7 @@ export function ProductForm(props: Props) {
 
   async function onDelete() {
     if (props.mode !== "edit") return;
-    if (!window.confirm("确定删除？若已有订单将无法删除。")) return;
+    if (!window.confirm("Delete this product? Items with orders cannot be removed.")) return;
     setDelPending(true);
     setError(null);
     const result = await deleteProduct(props.productId);
@@ -106,13 +106,13 @@ export function ProductForm(props: Props) {
       <StaggerContainer className="space-y-4">
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            名称 <span className="text-red-600">*</span>
+            Name <span className="text-red-600">*</span>
             <input name="name" type="text" required maxLength={200} defaultValue={init.name} className={field} />
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            URL slug（仅小写英文、数字、连字）<span className="text-red-600">*</span>
+            URL slug (lowercase letters, numbers, hyphens) <span className="text-red-600">*</span>
             <input
               name="slug"
               type="text"
@@ -127,7 +127,7 @@ export function ProductForm(props: Props) {
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            描述 <span className="text-red-600">*</span>
+            Description <span className="text-red-600">*</span>
             <textarea
               name="description"
               required
@@ -140,7 +140,7 @@ export function ProductForm(props: Props) {
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            主图 URL（https，可空）
+            Hero image URL (https, optional)
             <input
               name="imageUrl"
               type="url"
@@ -154,7 +154,7 @@ export function ProductForm(props: Props) {
         <StaggerItem>
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block text-sm text-zinc-700">
-              基础价 CAD <span className="text-red-600">*</span>
+              Base price (CAD) <span className="text-red-600">*</span>
               <input
                 name="basePriceCad"
                 type="number"
@@ -166,7 +166,7 @@ export function ProductForm(props: Props) {
               />
             </label>
             <label className="block text-sm text-zinc-700">
-              促销价 CAD（可空，结账取促销价）
+              Sale price (CAD, optional—used at checkout when set)
               <input
                 name="salePriceCad"
                 type="number"
@@ -174,7 +174,7 @@ export function ProductForm(props: Props) {
                 step="0.01"
                 defaultValue={init.salePriceCad ?? ""}
                 className={field}
-                placeholder="留空即无促销"
+                placeholder="Leave empty for no sale price"
               />
             </label>
           </div>
@@ -182,7 +182,7 @@ export function ProductForm(props: Props) {
         <StaggerItem>
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block text-sm text-zinc-700">
-              库存
+              Stock
               <input
                 name="stock"
                 type="number"
@@ -194,7 +194,7 @@ export function ProductForm(props: Props) {
               />
             </label>
             <label className="block text-sm text-zinc-700">
-              低库存告警线
+              Low-stock alert threshold
               <input
                 name="lowStockLevel"
                 type="number"
@@ -209,14 +209,14 @@ export function ProductForm(props: Props) {
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            状态
+            Status
             <select
               name="isActive"
               defaultValue={init.isActive ? "1" : "0"}
               className={`${field} bg-white`}
             >
-              <option value="1">上架（前台商城可见）</option>
-              <option value="0">下架（前台隐藏）</option>
+              <option value="1">Active (visible in shop)</option>
+              <option value="0">Inactive (hidden)</option>
             </select>
           </label>
         </StaggerItem>
@@ -230,13 +230,13 @@ export function ProductForm(props: Props) {
               transition={springTap}
               className="rounded-full bg-[var(--sg-cta)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
             >
-              {pending ? "保存中…" : props.mode === "create" ? "创建商品" : "保存"}
+              {pending ? "Saving…" : props.mode === "create" ? "Create product" : "Save"}
             </motion.button>
             <Link
               href="/admin/products"
               className="rounded-full border border-[var(--sg-border-subtle)] px-6 py-2.5 text-sm font-medium text-zinc-800"
             >
-              返回列表
+              Back to list
             </Link>
             {props.mode === "edit" ? (
               <motion.button
@@ -247,7 +247,7 @@ export function ProductForm(props: Props) {
                 transition={springTap}
                 className="rounded-full border border-red-200 bg-red-50 px-6 py-2.5 text-sm font-medium text-red-800 disabled:opacity-60"
               >
-                {delPending ? "删除中…" : "删除"}
+                {delPending ? "Deleting…" : "Delete"}
               </motion.button>
             ) : null}
           </div>

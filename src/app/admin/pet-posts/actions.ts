@@ -21,7 +21,7 @@ export async function createPetPost(
 ): Promise<CreatePetPostState> {
   const session = await auth();
   if (!session?.user?.id || session.user.role !== "ADMIN") {
-    return { ok: false, message: "需要管理员权限。" };
+    return { ok: false, message: "Administrator access required." };
   }
 
   const mediaRaw = formData.get("mediaUrls");
@@ -40,12 +40,12 @@ export async function createPetPost(
   });
 
   if (!parsed.success) {
-    return { ok: false, message: "请检查宠物、文案与图片 URL 格式。" };
+    return { ok: false, message: "Check the pet, caption, and image URL format." };
   }
 
   const pet = await prisma.pet.findUnique({ where: { id: parsed.data.petId } });
   if (!pet) {
-    return { ok: false, message: "未找到该宠物。" };
+    return { ok: false, message: "Pet not found." };
   }
 
   await prisma.petPost.create({

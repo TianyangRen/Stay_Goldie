@@ -36,12 +36,12 @@ export default async function AdminEditProductPage({ params }: Props) {
       <Reveal>
         <p className="text-sm text-zinc-600">
           <Link href="/admin/products" className="text-[var(--sg-green)] underline underline-offset-4">
-            ← 商品列表
+            ← Products
           </Link>
         </p>
       </Reveal>
       <Reveal delay={0.05}>
-        <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">编辑 · {product.name}</h1>
+        <h1 className="mt-4 text-3xl font-semibold text-[var(--sg-green)]">Edit · {product.name}</h1>
       </Reveal>
       <Reveal delay={0.08}>
         <p className="mt-2 font-mono text-sm text-zinc-500">id: {product.id}</p>

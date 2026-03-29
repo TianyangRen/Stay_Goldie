@@ -40,7 +40,7 @@ export function RegisterForm() {
     setPending(false);
 
     if (signed?.error) {
-      setError("账号已创建，但自动登录失败，请使用密码手动登录。");
+      setError("Your account was created, but automatic sign-in failed. Please sign in with your password.");
       return;
     }
 
@@ -52,20 +52,20 @@ export function RegisterForm() {
       <StaggerContainer className="space-y-4">
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            称呼（可选）
+            Display name (optional)
             <input
               name="name"
               type="text"
               maxLength={80}
               autoComplete="name"
               className="mt-2 w-full rounded-2xl border border-[var(--sg-border-subtle)] bg-[var(--sg-surface)] px-4 py-3 text-sm"
-              placeholder="例如：王小明"
+              placeholder="Alex"
             />
           </label>
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            邮箱
+            Email
             <input
               name="email"
               type="email"
@@ -78,7 +78,7 @@ export function RegisterForm() {
         </StaggerItem>
         <StaggerItem>
           <label className="block text-sm text-zinc-700">
-            密码（至少 8 位）
+            Password (min. 8 characters)
             <input
               name="password"
               type="password"
@@ -98,14 +98,14 @@ export function RegisterForm() {
             transition={springTap}
             className="mt-1 w-full rounded-2xl bg-[var(--sg-cta)] px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
           >
-            {pending ? "创建账号中…" : "注册"}
+            {pending ? "Creating account…" : "Register"}
           </motion.button>
         </StaggerItem>
         <StaggerItem>
           <p className="text-center text-sm text-zinc-600">
-            已有账号？{" "}
+            Already have an account?{" "}
             <Link href="/login" className="font-medium text-[var(--sg-green)] underline underline-offset-4">
-              登录
+              Sign in
             </Link>
           </p>
         </StaggerItem>
