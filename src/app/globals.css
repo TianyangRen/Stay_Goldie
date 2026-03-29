@@ -10,7 +10,8 @@
   --sg-muted: #78716c;
   --sg-primary: #f97316;
   --sg-secondary: #fb923c;
-  --sg-cta: #2563eb;
+  /* Lighter than blue-600 — pairs warmer with orange without looking “navy” */
+  --sg-cta: #3b82f6;
   --sg-green: #f97316;
   --sg-accent: #fb923c;
   --sg-surface: #fffdfb;
@@ -63,7 +64,7 @@ body {
   position: absolute;
   inset: -40% -20% auto -10%;
   height: min(72vh, 520px);
-  background: radial-gradient(ellipse 70% 60% at 18% 35%, rgba(37, 99, 235, 0.11), transparent 58%),
+  background: radial-gradient(ellipse 70% 60% at 18% 35%, rgba(59, 130, 246, 0.09), transparent 58%),
     radial-gradient(ellipse 55% 50% at 92% 18%, rgba(249, 115, 22, 0.14), transparent 52%),
     radial-gradient(ellipse 50% 45% at 70% 85%, rgba(20, 184, 166, 0.08), transparent 55%);
   pointer-events: none;
@@ -71,7 +72,6 @@ body {
 
 .pet-spa-hero > * {
   position: relative;
-  z-index: 1;
 }
 
 /* Subtle grain so gradients feel less “plastic” */
@@ -133,6 +133,14 @@ body {
   border-radius: 1.75rem;
   border: 3px solid var(--sg-clay-border);
   box-shadow: var(--sg-clay-shadow-out), var(--sg-clay-shadow-in);
+}
+
+/** Hero photos: border only — no outer glow / double shadow */
+.hero-photo-frame {
+  border-radius: 1.75rem;
+  border: 3px solid var(--sg-clay-border);
+  background-color: var(--sg-surface-elevated);
+  box-shadow: none;
 }
 
 /** Micro-interaction timing (UI Pro Max: soft press ~200ms ease-out) */

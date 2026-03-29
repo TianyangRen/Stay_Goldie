@@ -22,6 +22,7 @@ async function main() {
   await prisma.booking.deleteMany();
   await prisma.pet.deleteMany();
   await prisma.blogPost.deleteMany();
+  await prisma.postingPersona.deleteMany();
   await prisma.blogCategory.deleteMany();
   await prisma.inventory.deleteMany();
   await prisma.product.deleteMany();
@@ -201,6 +202,15 @@ async function main() {
     data: { name: "Training & behaviour", slug: "behavior" },
   });
 
+  const mascotPersona = await prisma.postingPersona.create({
+    data: {
+      userId: admin.id,
+      name: "Goldie",
+      avatarUrl:
+        "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400&auto=format&fit=crop",
+    },
+  });
+
   await prisma.blogPost.createMany({
     data: [
       {
@@ -229,6 +239,37 @@ async function main() {
       },
     ],
   });
+
+  await prisma.blogPost.create({
+    data: {
+      authorId: admin.id,
+      personaId: mascotPersona.id,
+      categoryId: categoryPrep.id,
+      title: "Sniffed the new turf — approved!",
+      slug: "goldie-weekend-sniff",
+      excerpt: "A quick note from the yard.",
+      content: "Woof! The grass is soft today. Tell your humans we saved the sunny patch for group play.",
+      coverImage:
+        "https://images.unsplash.com/photo-1548199973-03cce0f87e69?q=80&w=1000&auto=format&fit=crop",
+      publishedAt: new Date("2026-03-14"),
+    },
+  });
+
+  const demoPost = await prisma.blogPost.findFirst({
+    where: { slug: "boarding-prep-checklist" },
+  });
+  if (demoPost) {
+    await prisma.blogPostLike.create({
+      data: { postId: demoPost.id, userId: owner.id },
+    });
+    await prisma.blogPostComment.create({
+      data: {
+        postId: demoPost.id,
+        userId: owner.id,
+        content: "So helpful — thank you!",
+      },
+    });
+  }
 
   console.log("Seed complete:", { admin: admin.email, owner: owner.email, booking: booking.id, post: post1.id });
 }

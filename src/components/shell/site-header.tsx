@@ -12,7 +12,7 @@ const links = [
   { href: "/booking", label: "Book" },
   { href: "/shop", label: "Shop" },
   { href: "/pet-feed", label: "Pet feed" },
-  { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Updates" },
 ];
 
 export function SiteHeader() {
@@ -78,6 +78,14 @@ export function SiteHeader() {
               <span className="hidden max-w-[140px] truncate text-xs text-zinc-500 lg:inline">
                 {session.user.email}
               </span>
+              <Pressable className="inline-block">
+                <Link
+                  href="/account/profile"
+                  className="focus-ring-clay rounded-full border border-[var(--sg-border-subtle)] bg-[var(--sg-surface-elevated)] px-3 py-2 text-xs font-medium text-zinc-700 transition-clay hover:border-[var(--sg-primary)]/25"
+                >
+                  Profile
+                </Link>
+              </Pressable>
               <Pressable className="inline-block">
                 <Link
                   href={session.user.role === "ADMIN" ? "/admin" : "/account/pets"}

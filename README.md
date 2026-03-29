@@ -7,6 +7,8 @@ Boutique dog boarding website with:
 - Stripe Checkout (CAD) + signed webhooks + idempotent event handling
 - S3-compatible presigned uploads (e.g. Cloudflare R2) for private files
 - Resend for transactional email (optional when `RESEND_API_KEY` is set)
+- **Updates feed** (`/blog`) — social-style posts with **likes** and **comments** (stored in Postgres)
+- **Profiles** — display name + avatar tied to the account email; **posting personas** (admin) for posting “as” a named pet
 
 ## Tech Stack
 
@@ -58,6 +60,10 @@ Use this checklist before taking **live** Stripe payments:
 
 - **Booking**: `/booking` — pick dates & pets → creates `Booking` (PENDING) → Stripe deposit → webhook sets CONFIRMED.
 - **Admin pet posts**: `/admin/pet-posts` — image presign (`petId` + admin) or paste image URLs → `createPetPost` Server Action.
+- **Updates (public feed)**: `/blog` — short posts; logged-in users can **like** and **comment**. Display name/avatar come from the author’s profile or from an optional **posting persona** (admin).
+- **Owner updates**: `/account/updates` — owners publish to the same public feed (no personas).
+- **Admin updates & personas**: `/admin/blog` — compose posts, manage **posting personas** (saved name + avatar per “pet voice”), publish as self or as a persona.
+- **Profile**: `/account/profile` — edit **display name** and **avatar** (URL or presigned image upload when S3 is configured). **Email** is read-only (login identity). Admins can open this route while other `/account/*` paths redirect to `/admin`.
 
 ## Stripe
 
@@ -68,19 +74,21 @@ Use this checklist before taking **live** Stripe payments:
 ## Main Routes
 
 - `/` landing page
-- `/services`, `/booking`, `/shop`, `/pet-feed`, `/blog`
+- `/services`, `/booking`, `/shop`, `/pet-feed`, `/blog` (Updates)
 - `/privacy`, `/terms` (placeholders for Path B)
-- `/account/*` (authenticated)
-- `/admin/*` (admin role only)
+- `/account/*` (authenticated); `/account/profile` also allowed for admins
+- `/account/updates`, `/account/updates/new` (owners — publish updates)
+- `/admin/*` (admin role only); `/admin/blog` — staff feed + personas
 
 ## API
 
 - `POST /api/stripe/checkout` — create Stripe Checkout session
 - `POST /api/stripe/webhook` — Stripe events (verify signature; idempotent by event id)
-- `POST /api/upload/presign` — presigned PUT for private vaccine files (requires S3 env vars)
+- `POST /api/upload/presign` — presigned PUT for images (`purpose`: `default` | `profile` | `update_cover` | `persona`, optional `petId` / `personaId`; requires S3 env vars). Set `S3_PUBLIC_BASE_URL` so clients receive a public URL after upload.
 - `GET/POST /api/auth/*` — Auth.js
 
 ## Notes
 
-- Middleware protects `/account`, `/pet-feed`, and `/admin` using JWT (`getToken` + `AUTH_SECRET`).
-- Path B still assumes **manual or seeded users**; self-serve registration is a later iteration.
+- Middleware protects `/account`, `/pet-feed`, and `/admin` using JWT (`getToken` + `AUTH_SECRET`). Admins are redirected from most `/account` routes to `/admin`, except **`/account/profile`**.
+- **Registration**: `/register` creates owner accounts (see `register` Server Action). Seeded accounts remain useful for demos.
+- **Database**: `BlogPostLike`, `BlogPostComment`, and `PostingPersona` support engagement and admin “pet voice” posting; run `npm run db:push:direct` after pulling schema changes.

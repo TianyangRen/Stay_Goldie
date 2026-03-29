@@ -11,6 +11,8 @@ const schema = z.object({
   fileName: z.string().min(1),
   contentType: z.string().min(1),
   petId: z.string().optional(),
+  personaId: z.string().optional(),
+  purpose: z.enum(["default", "profile", "update_cover", "persona"]).optional(),
 });
 
 function publicUrlForKey(key: string): string | undefined {
@@ -44,9 +46,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Only image uploads are allowed" }, { status: 400 });
   }
 
+  const purpose = parsed.data.purpose ?? "default";
   let keyPrefix = `private/${session.user.id}`;
 
-  if (parsed.data.petId) {
+  if (purpose === "profile") {
+    keyPrefix = `avatars/${session.user.id}`;
+  } else if (purpose === "update_cover") {
+    keyPrefix = `updates/${session.user.id}`;
+  } else if (purpose === "persona" && parsed.data.personaId) {
+    const persona = await prisma.postingPersona.findUnique({
+      where: { id: parsed.data.personaId },
+    });
+    if (!persona || persona.userId !== session.user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    keyPrefix = `personas/${persona.id}`;
+  } else if (parsed.data.petId) {
     if (session.user.role !== "ADMIN") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

@@ -23,7 +23,9 @@ export async function middleware(request: NextRequest) {
     }
     // Owner account area; admins should use /admin
     if (path.startsWith("/account") && token.role === "ADMIN") {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      if (!path.startsWith("/account/profile")) {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
     }
   }
 

@@ -37,16 +37,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: user.id,
           email: user.email,
           name: user.name ?? undefined,
+          image: user.image ?? undefined,
           role: user.role,
         };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.sub = user.id;
         token.role = (user as { role: UserRole }).role;
+        token.picture = (user as { image?: string | null }).image ?? undefined;
+        token.name = user.name ?? undefined;
+      }
+      if (trigger === "update" && token.sub) {
+        const row = await prisma.user.findUnique({
+          where: { id: token.sub as string },
+          select: { name: true, image: true },
+        });
+        if (row) {
+          token.name = row.name ?? undefined;
+          token.picture = row.image ?? undefined;
+        }
       }
       return token;
     },
@@ -54,6 +67,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.sub as string;
         session.user.role = token.role as UserRole;
+        session.user.name = (token.name as string | undefined) ?? session.user.name;
+        session.user.image = (token.picture as string | undefined) ?? session.user.image;
       }
       return session;
     },

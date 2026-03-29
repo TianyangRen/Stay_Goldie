@@ -46,6 +46,23 @@ model User {
   bookings      Booking[]
   orders        Order[]
   blogPosts     BlogPost[]
+  postingPersonas PostingPersona[]
+  blogPostLikes   BlogPostLike[]
+  blogPostComments BlogPostComment[]
+}
+
+/** Admin-only "voice" for updates: post as a named pet with its own avatar. */
+model PostingPersona {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  avatarUrl String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[]
+
+  @@index([userId])
 }
 
 model Account {
@@ -237,6 +254,8 @@ model BlogPost {
   id           String       @id @default(cuid())
   authorId     String
   author       User         @relation(fields: [authorId], references: [id])
+  personaId    String?
+  persona      PostingPersona? @relation(fields: [personaId], references: [id], onDelete: SetNull)
   categoryId   String?
   category     BlogCategory? @relation(fields: [categoryId], references: [id])
   title        String
@@ -246,4 +265,33 @@ model BlogPost {
   coverImage   String?
   publishedAt  DateTime?
   createdAt    DateTime     @default(now())
+  likes        BlogPostLike[]
+  comments     BlogPostComment[]
+
+  @@index([authorId])
+  @@index([personaId])
+}
+
+model BlogPostLike {
+  id        String   @id @default(cuid())
+  postId    String
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+  @@index([userId])
+}
+
+model BlogPostComment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([postId])
 }
